@@ -10,7 +10,7 @@
         <div class="activity" v-for="(article, index) in post" :key="index">
           <!-- 动态图片 -->
           <div class="act-image-wrapper" style="height: 100px">
-            <img :src="article.imgUrl" alt="" />
+            <img :src="article.coverImage" alt="" />
           </div>
           <!-- 动态元数据，包括发表日期和评论数量 -->
           <div class="meta">
@@ -31,7 +31,7 @@
           <!-- 阅读更多按钮 -->
           <button
             class="readmore-btn"
-            @click="showDetail(article.id, article.imgUrl)"
+            @click="showDetail(article.id, article.coverImage)"
           >
             阅读更多
           </button>
@@ -57,10 +57,9 @@
 import config from 'config'
 export default {
   name: 'PostOverview',
-  props: ['keyWord'],
   data () {
     return {
-      searchContent: this.keyWord,
+      searchContent: this.$router.query,
       total: 12,
       pageNum: 1,
       pageSize: 3,
@@ -68,56 +67,56 @@ export default {
       post: [
         {
           title: 'Java8',
-          imgUrl: '',
+          coverImage: '',
           createTime: '2020年09月10日',
           views: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
         },
         {
           title: 'Java8',
-          imgUrl: '',
+          coverImage: '',
           createTime: '2020年09月10日',
           views: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
         },
         {
           title: 'Java8',
-          imgUrl: '',
+          coverImage: '',
           createTime: '2020年09月10日',
           views: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
         },
         {
           title: 'Java8',
-          imgUrl: '',
+          coverImage: '',
           createTime: '2020年09月10日',
           views: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
         },
         {
           title: 'Java8',
-          imgUrl: '',
+          coverImage: '',
           createTime: '2020年09月10日',
           views: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
         },
         {
           title: 'Java8',
-          imgUrl: '',
+          coverImage: '',
           createTime: '2020年09月10日',
           views: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
         },
         {
           title: 'Java8',
-          imgUrl: '',
+          coverImage: '',
           createTime: '2020年09月10日',
           views: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
         },
         {
           title: 'Java8',
-          imgUrl: '',
+          coverImage: '',
           createTime: '2020年09月10日',
           views: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
@@ -126,8 +125,8 @@ export default {
     }
   },
   methods: {
-    showDetail: function (blogId, imgUrl) {
-      alert(this.searchContent)
+    showDetail: function (blogId, coverImage) {
+      alert(this.$route.query.content)
       this.$router.push({
         path: 'article',
         query: {
@@ -149,7 +148,7 @@ export default {
       const axios = require('axios')
       let vm = this
       vm.loading = false
-      axios.get(config.apiBaseUrl + '/content' + '?pageNum=' + this.pageNum + '&pageSize=' + this.pageSize)
+      axios.get(config.apiBaseUrl + '/api/post' + '?pageNum=' + this.pageNum + '&pageSize=' + this.pageSize)
         .then(function (response) {
           // handle success
           console.log(response)
@@ -169,7 +168,7 @@ export default {
     const axios = require('axios')
     let vm = this
     vm.loading = false
-    axios.get(config.apiBaseUrl + '/content' + '?pageNum=' + this.pageNum + '&pageSize=' + this.pageSize)
+    axios.get(config.apiBaseUrl + '/api/post' + '?pageNum=' + this.pageNum + '&pageSize=' + this.pageSize)
       .then(function (response) {
         // handle success
         console.log(response)

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <post-overview :keyWord="searchContent"></post-overview>
+    <post-overview></post-overview>
   </div>
 </template>
 

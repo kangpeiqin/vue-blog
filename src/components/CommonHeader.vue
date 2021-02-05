@@ -11,10 +11,10 @@
           <el-button style="padding: 10px" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
       </li>
       <li v-on:click=goToIndex()>首页</li>
-      <li v-on:click=goToAbout()>关于我</li>
       <li v-on:click="goToType()">分类</li>
-      <li v-on:click="goToLabel()">标签</li>
-      <li>登陆</li>
+      <li v-on:click="goToLabel()">归档</li>
+      <li v-on:click=goToAbout()>关于我</li>
+      <li v-on:click="login()">登陆</li>
     </ul>
     <div class="burger" v-on:click=showIndex()>
       <div class="top-line"></div>
@@ -28,13 +28,18 @@
 export default {
   data () {
     return {
-      searchShow: true,
+      searchShow: false,
       searchContent: ''
     }
   },
   methods: {
     search: function () {
-      alert(this.searchContent)
+      this.$router.push({
+        path: '/',
+        query: {
+          content: this.searchContent
+        }
+      })
     },
     goToIndex: function () {
       this.searchShow = true
@@ -51,6 +56,10 @@ export default {
     goToLabel: function () {
       this.searchShow = false
       this.$router.push({path: '/tag'})
+    },
+    login: function () {
+      this.searchShow = false
+      this.$router.push({path: '/loginPage'})
     },
     showIndex: function () {
       const burger = document.querySelector('.burger')
@@ -70,6 +79,7 @@ export default {
     }
   },
   created () {
+    this.goToIndex()
   }
 }
 </script>
