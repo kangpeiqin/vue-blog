@@ -1,6 +1,11 @@
 <template>
-  <section class="article" v-loading="loading">
-    <h2 class="title">{{article.title}}</h2>
+  <section class="article">
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/' }">返回</el-breadcrumb-item>
+      <el-breadcrumb-item><a href="/">上一篇</a></el-breadcrumb-item>
+      <el-breadcrumb-item><a href="/">下一篇</a></el-breadcrumb-item>
+    </el-breadcrumb>
+    <h1 class="title">{{article.title}}</h1>
     <div class="article-content">
       <div class="act-image-wrapper">
         <img :src="article.imgUrl" alt=""/>
@@ -9,7 +14,7 @@
         <p class="date-published">
           <i class="far fa-calendar">{{article.createTime}}</i>
         </p>
-        <p class="comments"><i class="far fa-comments">阅读&nbsp;&nbsp;{{article.views}}</i> </p>
+        <p class="comments"><i class="far fa-comments">阅读&nbsp;&nbsp;{{article.browseTimes}}</i> </p>
       </div>
 <!--      <h2 class="act-title">{{message}}</h2>-->
       <article class="post-content" v-html="article.content">
@@ -27,19 +32,18 @@ export default {
     return {
       loading: true,
       article: {
-        title: '梦境', views: '22', createTime: '2020-09-10', imgUrl: 'http://localhost:8080/static/img/background.1272215.jpg', content: 'This is a test'
+        title: '梦境', browseTimes: '22', createTime: '2020-09-10', imgUrl: 'http://localhost:8080/static/img/background.1272215.jpg', content: 'This is a test'
       }
     }
   },
   created () {
     const axios = require('axios')
     var vm = this
-    axios.get(config.apiBaseUrl + '/blog/' + this.$route.query.id)
+    axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
       .then(function (response) {
         // handle success
         console.log(response)
         vm.article = response.data.data
-        // vm.loading = true
       })
       .catch(function (error) {
         // handle error
@@ -57,8 +61,12 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Helvetica, "PingFang SC", "Microsoft Yahei", sans-serif;
-    font-size: 14px;
+    font-family: "Trebuchet MS",Arial,"Lucida Grande",Verdana,Lucida,Helvetica,sans-serif;
+    /*font-size: 14px;*/
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: 500;
   }
   /* 图片默认宽度100% */
   img {
@@ -75,7 +83,7 @@ export default {
 
   /* 区域大标题 */
   .title {
-    font-size: 25px;
+    /*font-size: 25px;*/
     color: #2e2e2e;
   }
   /* 大标题下方红线 */
@@ -119,7 +127,7 @@ export default {
     margin-top: 20px;
     margin-bottom: 12px;
     color: #c6c6c6;
-    font-size: 12px;
+    /*font-size: 12px;*/
     display: flex;
   }
 
@@ -129,7 +137,7 @@ export default {
 
   .act-title {
     color: #494949;
-    font-size: 18px;
+    /*font-size: 18px;*/
     margin-bottom: 16px;
   }
 

@@ -1,14 +1,8 @@
 <template>
-  <div>
-    <common-header></common-header>
-    <div>
-      <post-detail></post-detail>
-    </div>
-  </div>
+    <post-detail></post-detail>
 </template>
 
 <script>
-import CommonHeader from '../components/CommonHeader'
 import PostDetail from '../components/PostDetail'
 export default {
   data () {
@@ -16,7 +10,6 @@ export default {
     }
   },
   components: {
-    CommonHeader,
     PostDetail
   },
   created () {

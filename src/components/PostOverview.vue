@@ -19,7 +19,7 @@
               <i class="far fa-calendar"></i>{{ article.createTime }}
             </p>
             <p class="comments">
-              <i class="far fa-comments"></i>阅读&nbsp;&nbsp;{{ article.views }}
+              <i class="far fa-comments"></i>阅读&nbsp;&nbsp;{{ article.browseTimes }}
             </p>
           </div>
           <!-- 动态标题 -->
@@ -31,7 +31,7 @@
           <!-- 阅读更多按钮 -->
           <button
             class="readmore-btn"
-            @click="showDetail(article.id, article.coverImage)"
+            @click="showDetail(article.id)"
           >
             阅读更多
           </button>
@@ -69,66 +69,16 @@ export default {
           title: 'Java8',
           coverImage: '',
           createTime: '2020年09月10日',
-          views: '21',
-          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
-        },
-        {
-          title: 'Java8',
-          coverImage: '',
-          createTime: '2020年09月10日',
-          views: '21',
-          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
-        },
-        {
-          title: 'Java8',
-          coverImage: '',
-          createTime: '2020年09月10日',
-          views: '21',
-          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
-        },
-        {
-          title: 'Java8',
-          coverImage: '',
-          createTime: '2020年09月10日',
-          views: '21',
-          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
-        },
-        {
-          title: 'Java8',
-          coverImage: '',
-          createTime: '2020年09月10日',
-          views: '21',
-          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
-        },
-        {
-          title: 'Java8',
-          coverImage: '',
-          createTime: '2020年09月10日',
-          views: '21',
-          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
-        },
-        {
-          title: 'Java8',
-          coverImage: '',
-          createTime: '2020年09月10日',
-          views: '21',
-          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
-        },
-        {
-          title: 'Java8',
-          coverImage: '',
-          createTime: '2020年09月10日',
-          views: '21',
+          browseTimes: '21',
           description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
         }
       ]
     }
   },
   methods: {
-    showDetail: function (blogId, coverImage) {
-      alert(this.$route.query.content)
+    showDetail: function (blogId) {
       this.$router.push({
-        path: 'article',
+        path: '/article',
         query: {
           id: blogId
         }
@@ -201,6 +151,7 @@ img {
 }
 .block{
   margin-top: 75px;
+  height: 100%;
 }
 /* 定义变量 */
 :root {
@@ -219,10 +170,11 @@ img {
 
 /* 通用样式  */
 .content-wrapper {
+  margin-top: 85px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 600px;
+  height: 100%;
 }
 
 /* 所有section都按grid布局 */
