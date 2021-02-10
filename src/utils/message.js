@@ -1,7 +1,7 @@
 import {Message} from 'element-ui'
 const showMessage = Symbol('showMessage')
 class JavaboyMessage {
-  [showMessage](type, options, single) {
+  [showMessage] (type, options, single) {
     if (single) {
       if (document.getElementsByClassName('el-message').length === 0) {
         Message[type](options)

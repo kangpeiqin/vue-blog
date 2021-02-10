@@ -65,7 +65,7 @@ export default {
     /*font-size: 14px;*/
   }
   h1 {
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: 500;
   }
   /* 图片默认宽度100% */
@@ -85,6 +85,7 @@ export default {
   .title {
     /*font-size: 25px;*/
     color: #2e2e2e;
+    margin-top: 34px;
   }
   /* 大标题下方红线 */
   .title::after {
