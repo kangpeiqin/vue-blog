@@ -10,6 +10,13 @@ import './assets/css/common.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import {postRequest, postKeyValueRequest, putRequest, deleteRequest, getRequest} from './utils/http'
+
+Vue.prototype.postRequest = postRequest
+Vue.prototype.postKeyValueRequest = postKeyValueRequest
+Vue.prototype.putRequest = putRequest
+Vue.prototype.deleteRequest = deleteRequest
+Vue.prototype.getRequest = getRequest
 
 const requireComponent = require.context(
   // 其组件目录的相对路径

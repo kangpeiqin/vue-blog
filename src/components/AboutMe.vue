@@ -81,7 +81,7 @@ export default {
     height: 2px;
     transform: translateX(10%);
     margin-top: 5px;
-    background-color: #ff434f;
+    /*background-color: #ff434f;*/
   }
 
   .article {

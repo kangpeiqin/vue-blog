@@ -1,42 +1,11 @@
 <template>
   <div class="type-container">
-    <el-container>
-      <h2 class="title">分类</h2>
-      <el-header style="height: 20px; display: flex;justify-items: center;max-width: 1180px;padding: 0 80px;">
-        <el-tag class="blog-type" style="margin: 4px"  v-for="(type,index) in types" :key="index" @click="showArticles(type.id,type.name)">{{type.name}} &nbsp;{{type.artNum}}</el-tag>
-      </el-header>
-      <div class="content-wrapper" v-loading="loading">
-        <section id="company-activities" class="company-activities">
-          <div class="activities">
-            <!-- 动态 -->
-            <div class="activity" v-for="(article,index) in post" :key="index">
-              <!-- 动态图片 -->
-              <div class="act-image-wrapper" style="height: 50px">
-                <img :src="article.imgUrl" alt="" />
-              </div>
-              <!-- 动态元数据，包括发表日期和评论数量 -->
-              <div class="meta">
-                <!-- 发布日期 -->
-                <p class="date-published">
-                  <i class="far fa-calendar"></i>{{article.createTime}}
-                </p>
-
-                <p class="comments"><i class="far fa-comments"></i>阅读&nbsp;&nbsp;{{article.views}}</p>
-              </div>
-              <!-- 动态标题 -->
-              <h2 class="act-title">{{article.title}}</h2>
-              <!-- 动态内容摘要 -->
-              <article>
-                {{article.description}}
-              </article>
-              <!-- 阅读更多按钮 -->
-              <button class="readmore-btn" @click="showBlogDetail(article.id,article.imgUrl)">阅读更多</button>
-            </div>
-          </div>
-        </section>
-        <div v-show="seen" style="margin-top: 50px;font-size: 25px;color: #ff434f">{{message}}</div>
-      </div>
-    </el-container>
+    <h2 class="title" style="font-weight: 200">目前共计 12 个分类</h2>
+    <ul v-for="(type, index) in types" :key="index">
+      <li>
+        <a class="classification">{{type.name}}({{type.artNum}})</a>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -52,11 +21,6 @@ export default {
       types: [{id: '1', name: '随笔', artNum: '12'},
         {id: '2', name: '考研笔记', artNum: '2'},
         {id: '2', name: '旅游', artNum: '2'}
-      ],
-      post: [
-        {title: 'Java8', imgUrl: '', createTime: '2020年09月10日', views: '21', description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'},
-        {title: 'Java8', imgUrl: '', createTime: '2020年09月10日', views: '21', description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'},
-        {title: 'Java8', imgUrl: '', createTime: '2020年09月10日', views: '21', description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'}
       ]
     }
   },
@@ -72,7 +36,7 @@ export default {
     showArticles: function (typeId, typeName) {
       const axios = require('axios')
       var vm = this
-      this.loading = true
+      // this.loading = true
       axios.get(config.apiBaseUrl + '/types/' + typeId)
         .then(function (response) {
           // handle success
@@ -80,7 +44,7 @@ export default {
           var data = response.data.data
           vm.post = data
           vm.seen = data.length === 0
-          vm.loading = false
+          // vm.loading = false
         })
         .catch(function (error) {
           // handle error
@@ -94,14 +58,14 @@ export default {
   created () {
     const axios = require('axios')
     var vm = this
-    vm.loading = true
+    // vm.loading = true
     axios.get(config.apiBaseUrl + '/allTypes')
       .then(function (response) {
         // handle success
         console.log(response)
         vm.types = response.data
         vm.showArticles(response.data[0].id)
-        vm.loading = false
+        // vm.loading = false
       })
       .catch(function (error) {
         // handle error
@@ -115,15 +79,18 @@ export default {
 </script>
 
 <style scoped>
-  .blog-type:hover{
-    cursor: pointer;
-  }
   .type-container{
     margin: 100px 20px 20px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 600px;
+  }
+  .classification:hover{
+    cursor: pointer;
+  }
+  .classification{
+    list-style-type: circle;
   }
 
   /* 图片默认宽度100% */
