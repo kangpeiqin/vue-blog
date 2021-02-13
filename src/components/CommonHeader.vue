@@ -2,7 +2,7 @@
   <nav class="sticky">
     <div class="logo">KANG'S BLOG</div>
     <ul class="nav-menu">
-      <li id="my-input"><search-input></search-input></li>
+      <li id="my-input" v-show="searchShow"><search-input></search-input></li>
       <li v-on:click=goToIndex()>首页</li>
       <li v-on:click="goToType()">分类</li>
       <li v-on:click="goToLabel()">归档</li>
@@ -21,6 +21,7 @@
 <script>
 import SearchInput from './SearchInput'
 import githubPendant from './githubPendant'
+import {mapState} from 'vuex'
 export default {
   components: {
     SearchInput,
@@ -49,20 +50,23 @@ export default {
       this.$router.push({path: '/'})
     },
     goToAbout: function () {
-      this.searchShow = false
+      this.hideSearchInput()
       this.$router.push({path: '/about'})
     },
     goToType: function () {
-      this.searchShow = false
+      this.hideSearchInput()
       this.$router.push({path: '/type'})
     },
     goToLabel: function () {
-      this.searchShow = false
+      this.hideSearchInput()
       this.$router.push({path: '/tag'})
     },
     login: function () {
-      this.searchShow = false
+      this.hideSearchInput()
       this.$router.push({path: '/loginPage'})
+    },
+    hideSearchInput: function () {
+      this.searchShow = false
     },
     showIndex: function () {
       const burger = document.querySelector('.burger')
@@ -81,6 +85,9 @@ export default {
       })
     }
   },
+  computed: mapState({
+    count: state => state.searchShow
+  }),
   created () {
     this.goToIndex()
   }

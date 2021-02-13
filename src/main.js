@@ -4,7 +4,8 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
+// import axios from 'axios'
+import store from './store/'
 import ElementUI from 'element-ui'
 import './assets/css/common.css'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -51,12 +52,12 @@ requireComponent.keys().forEach(fileName => {
 })
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-Vue.prototype.$http = axios
+// Vue.prototype.$http = axios
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
+  store,
   components: {App},
   template: '<App/>'
-})
+}).$mount('#app')
