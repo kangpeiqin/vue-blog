@@ -95,23 +95,23 @@ export default {
       this.getData()
     },
     getData () {
-      const axios = require('axios')
-      let vm = this
-      vm.loading = false
-      axios.get(config.apiBaseUrl + '/api/post' + '?pageNum=' + this.pageNum + '&pageSize=' + this.pageSize)
-        .then(function (response) {
-          // handle success
-          console.log(response)
-          vm.post = response.data.data.records
-          vm.loading = false
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error)
-        })
-        .then(function () {
-          // always executed
-        })
+    //   const axios = require('axios')
+    //   let vm = this
+    //   vm.loading = false
+    //   axios.get(config.apiBaseUrl + '/api/post' + '?pageNum=' + this.pageNum + '&pageSize=' + this.pageSize)
+    //     .then(function (response) {
+    //       // handle success
+    //       console.log(response)
+    //       vm.post = response.data.data.records
+    //       vm.loading = false
+    //     })
+    //     .catch(function (error) {
+    //       // handle error
+    //       console.log(error)
+    //     })
+    //     .then(function () {
+    //       // always executed
+    //     })
     }
   },
   created () {
