@@ -1,14 +1,24 @@
 <template>
   <div class="inputBox">
-    <input type="text" placeholder="搜索文章">
+    <input type="text" placeholder="搜索文章" v-model="content" v-on:keydown.enter="qry" />
     <div class="search"></div>
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
   name: 'SearchInput',
   data () {
-
+    return {
+      content: ''
+    }
+  },
+  computed: mapState(['qryContent']),
+  methods: {
+    qry: function () {
+      this.$store.commit('setQryContent', this.content)
+      alert(this.qryContent)
+    }
   }
 }
 </script>

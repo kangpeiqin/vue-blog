@@ -21,7 +21,6 @@
 <script>
 import SearchInput from './SearchInput'
 import githubPendant from './githubPendant'
-import {mapState} from 'vuex'
 export default {
   components: {
     SearchInput,
@@ -29,8 +28,7 @@ export default {
   },
   data () {
     return {
-      searchShow: false,
-      searchContent: ''
+      searchShow: false
     }
   },
   comments: {
@@ -40,9 +38,7 @@ export default {
     search: function () {
       this.$router.push({
         path: '/',
-        query: {
-          content: this.searchContent
-        }
+        query: {}
       })
     },
     goToIndex: function () {
@@ -85,9 +81,6 @@ export default {
       })
     }
   },
-  computed: mapState({
-    count: state => state.searchShow
-  }),
   created () {
     this.goToIndex()
   }
