@@ -21,13 +21,21 @@
 <!--        {{article.content}}-->
       </article>
     </div>
+    <div>
+      <comment></comment>
+    </div>
   </section>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import config from 'config'
+import comment from 'hbl-comment'
 export default {
   name: 'PostDetail',
+  components: {
+    comment
+  },
   data () {
     return {
       loading: true,
@@ -36,22 +44,31 @@ export default {
       }
     }
   },
+  computed: mapState({
+    articleId: state => state.articleId
+  }),
   created () {
-    const axios = require('axios')
-    var vm = this
-    axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
-      .then(function (response) {
-        // handle success
-        console.log(response)
-        vm.article = response.data.data
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error)
-      })
-      .then(function () {
-        // always executed
-      })
+    this.getRequest(config.apiBaseUrl + '/api/post/' + this.articleId, null).then(resp => {
+      if (resp) {
+        console.log('article:', resp)
+        this.article = resp.data
+      }
+    })
+    // const axios = require('axios')
+    // var vm = this
+    // axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
+    //   .then(function (response) {
+    //     // handle success
+    //     console.log(response)
+    //     vm.article = response.data.data
+    //   })
+    //   .catch(function (error) {
+    //     // handle error
+    //     console.log(error)
+    //   })
+    //   .then(function () {
+    //     // always executed
+    //   })
   }
 }
 </script>

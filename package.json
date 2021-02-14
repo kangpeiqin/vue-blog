@@ -19,6 +19,7 @@
     "babel-polyfill": "^6.26.0",
     "element-ui": "^2.13.0",
     "halo-editor": "^2.8.2",
+    "hbl-comment": "^1.2.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.6.2",

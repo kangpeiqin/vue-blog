@@ -1,7 +1,7 @@
 <template>
   <div class="inputBox">
-    <input type="text" placeholder="搜索文章" v-model="content" v-on:keydown.enter="qry" />
-    <div class="search"></div>
+    <input type="text" placeholder="搜索文章" v-model="content" v-on:keydown.enter="qry"/>
+    <div class="search" @click="clear" ></div>
   </div>
 </template>
 <script>
@@ -17,7 +17,10 @@ export default {
   methods: {
     qry: function () {
       this.$store.commit('setQryContent', this.content)
-      alert(this.qryContent)
+    },
+    clear: function () {
+      this.content = ''
+      this.$store.commit('setQryContent', this.content)
     }
   }
 }

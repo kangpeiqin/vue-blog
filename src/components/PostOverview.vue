@@ -1,9 +1,10 @@
 <template>
-  <div class="content-wrapper" v-loading="loading">
+  <div class="content-wrapper">
 <!-- 回到顶部功能按钮   -->
     <el-backtop :visibility-height="80">
       <i class="el-icon-caret-top"></i>
     </el-backtop>
+    <noting-to-show v-show="tipShow"></noting-to-show>
     <section id="company-activities" class="company-activities">
       <div class="activities">
         <!-- 动态 -->
@@ -38,7 +39,7 @@
         </div>
       </div>
     </section>
-    <div class="block">
+    <div class="block" v-show="!tipShow">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -55,15 +56,20 @@
 
 <script>
 import config from 'config'
+import {mapState} from 'vuex'
+import notingToShow from '../exception/NothingToShow'
 export default {
   name: 'PostOverview',
+  components: {
+    notingToShow
+  },
   data () {
     return {
-      searchContent: this.$router.query,
       total: 12,
       pageNum: 1,
       pageSize: 3,
       loading: true,
+      tipShow: false,
       post: [
         {
           title: 'Java8',
@@ -77,11 +83,10 @@ export default {
   },
   methods: {
     showDetail: function (blogId) {
+      this.$store.commit('setArticleId', blogId)
+      this.$store.commit('setSearchShow', false)
       this.$router.push({
-        path: '/article',
-        query: {
-          id: blogId
-        }
+        path: '/article'
       })
     },
     handleSizeChange (pageSize) {
@@ -95,44 +100,28 @@ export default {
       this.getData()
     },
     getData () {
-    //   const axios = require('axios')
-    //   let vm = this
-    //   vm.loading = false
-    //   axios.get(config.apiBaseUrl + '/api/post' + '?pageNum=' + this.pageNum + '&pageSize=' + this.pageSize)
-    //     .then(function (response) {
-    //       // handle success
-    //       console.log(response)
-    //       vm.post = response.data.data.records
-    //       vm.loading = false
-    //     })
-    //     .catch(function (error) {
-    //       // handle error
-    //       console.log(error)
-    //     })
-    //     .then(function () {
-    //       // always executed
-    //     })
+      this.getRequest(config.apiBaseUrl + '/api/post', {'pageNum': this.pageNum, 'pageSize': this.pageSize, 'keyWord': this.qryContent}).then(resp => {
+        if (resp) {
+          console.log('data:', resp)
+          this.post = resp.data.records
+          this.total = resp.data.total
+          this.tipShow = this.total === 0
+        }
+      })
+    }
+  },
+  computed: mapState({
+    qryContent: state => state.qryContent,
+    articleId: state => state.articleId,
+    searchShow: state => state.searchShow
+  }),
+  watch: {
+    qryContent: function () {
+      this.getData()
     }
   },
   created () {
-    const axios = require('axios')
-    let vm = this
-    vm.loading = false
-    axios.get(config.apiBaseUrl + '/api/post' + '?pageNum=' + this.pageNum + '&pageSize=' + this.pageSize)
-      .then(function (response) {
-        // handle success
-        console.log(response)
-        vm.post = response.data.data.records
-        vm.total = response.data.data.total
-        vm.loading = false
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error)
-      })
-      .then(function () {
-        // always executed
-      })
+    this.getData()
   }
 }
 </script>

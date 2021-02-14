@@ -11,6 +11,7 @@ import './assets/css/common.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+
 import {postRequest, postKeyValueRequest, putRequest, deleteRequest, getRequest} from './utils/http'
 
 Vue.prototype.postRequest = postRequest
@@ -52,6 +53,7 @@ requireComponent.keys().forEach(fileName => {
 })
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+
 // Vue.prototype.$http = axios
 
 /* eslint-disable no-new */

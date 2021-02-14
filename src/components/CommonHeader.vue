@@ -21,18 +21,17 @@
 <script>
 import SearchInput from './SearchInput'
 import githubPendant from './githubPendant'
+import {mapState} from 'vuex'
+
 export default {
   components: {
     SearchInput,
     githubPendant
   },
+  computed: mapState(['searchShow']),
   data () {
     return {
-      searchShow: false
     }
-  },
-  comments: {
-    SearchInput
   },
   methods: {
     search: function () {
@@ -42,27 +41,27 @@ export default {
       })
     },
     goToIndex: function () {
-      this.searchShow = true
+      this.changeState(true)
       this.$router.push({path: '/'})
     },
     goToAbout: function () {
-      this.hideSearchInput()
+      this.changeState(false)
       this.$router.push({path: '/about'})
     },
     goToType: function () {
-      this.hideSearchInput()
+      this.changeState(false)
       this.$router.push({path: '/type'})
     },
     goToLabel: function () {
-      this.hideSearchInput()
+      this.changeState(false)
       this.$router.push({path: '/tag'})
     },
     login: function () {
-      this.hideSearchInput()
+      this.changeState(false)
       this.$router.push({path: '/loginPage'})
     },
-    hideSearchInput: function () {
-      this.searchShow = false
+    changeState: function (show) {
+      this.$store.commit('setSearchShow', show)
     },
     showIndex: function () {
       const burger = document.querySelector('.burger')

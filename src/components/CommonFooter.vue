@@ -12,7 +12,11 @@
 
 <script>
 export default {
-  name: 'CommonFooter'
+  name: 'CommonFooter',
+  data () {
+    return {
+    }
+  }
 }
 </script>
 

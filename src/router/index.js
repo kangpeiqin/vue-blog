@@ -42,7 +42,8 @@ export default new Router({
       component: tagPage
     }, {
       path: '*',
-      component: loginPage
+      name: 'NotFound',
+      component: () => import('@/exception/404')
     }
   ]
 })
