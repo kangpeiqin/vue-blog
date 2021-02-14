@@ -8,7 +8,7 @@
     <h1 class="title">{{article.title}}</h1>
     <div class="article-content">
       <div class="act-image-wrapper">
-        <img :src="article.imgUrl" alt=""/>
+        <img :src="article.coverImage" alt=""/>
       </div>
       <div class="meta">
         <p class="date-published">
@@ -17,12 +17,12 @@
         <p class="comments"><i class="far fa-comments">阅读&nbsp;&nbsp;{{article.browseTimes}}</i> </p>
       </div>
 <!--      <h2 class="act-title">{{message}}</h2>-->
-      <article class="post-content" v-html="article.content">
+      <article class="post-content" v-html="article.formatContent">
 <!--        {{article.content}}-->
       </article>
     </div>
     <div>
-      <comment></comment>
+      <comment v-bind="comment"></comment>
     </div>
   </section>
 </template>
@@ -39,8 +39,12 @@ export default {
   data () {
     return {
       loading: true,
+      comment: {
+        commentNum: 10,
+        placeholder: '在此输入评论'
+      },
       article: {
-        title: '梦境', browseTimes: '22', createTime: '2020-09-10', imgUrl: 'http://localhost:8080/static/img/background.1272215.jpg', content: 'This is a test'
+        title: '梦境', browseTimes: '22', createTime: '2020-09-10', coverImage: 'http://localhost:8080/static/img/background.1272215.jpg', formatContent: 'This is a test'
       }
     }
   },
