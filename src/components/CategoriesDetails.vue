@@ -6,12 +6,17 @@
         <ul v-for="(type, index) in types" :key="index" style="margin-bottom: 15px">
           <li style="list-style: none" @click="goToDetails">
             <a class="classification">
-              <h1> <img src="../assets/images/lantern.png" style="width: 30px;height: 30px;margin-bottom: -5px"/>
+              <h1> <img src="../assets/images/iconfont.png" style="width: 30px;height: 30px;margin-bottom: -5px"/>
                 {{type.category.name}}({{type.postNum}})</h1>
             </a>
           </li>
         </ul>
       </div>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="100">
+      </el-pagination>
     </div>
   </section>
 </template>
@@ -20,7 +25,7 @@
 import config from 'config'
 
 export default {
-  name: 'Classification',
+  name: 'ClassificationDetails',
   data () {
     return {
       loading: true,
@@ -57,21 +62,6 @@ export default {
   },
   created () {
     this.getAll()
-    // const axios = require('axios')
-    // var vm = this
-    // axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
-    //   .then(function (response) {
-    //     // handle success
-    //     console.log(response)
-    //     vm.article = response.data.data
-    //   })
-    //   .catch(function (error) {
-    //     // handle error
-    //     console.log(error)
-    //   })
-    //   .then(function () {
-    //     // always executed
-    //   })
   }
 }
 </script>
@@ -82,6 +72,14 @@ export default {
     padding: 0;
     box-sizing: border-box;
     font-family: "Trebuchet MS", Arial, "Lucida Grande", Verdana, Lucida, Helvetica, sans-serif;
+  }
+
+  li {
+    color: #555;
+    text-decoration: none;
+    outline: none;
+    border-bottom: 1px solid #999;
+    word-wrap: break-word;
   }
 
   h1 {

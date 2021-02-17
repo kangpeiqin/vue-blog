@@ -8,6 +8,7 @@ import postDetailPage from '../pages/postDetailPage'
 import aboutPage from '../pages/aboutPage'
 import typePage from '../pages/typePage'
 import tagPage from '../pages/tagPage'
+import categoriesDetailsPage from '../pages/categoriesDetailsPage'
 
 Vue.use(Router)
 
@@ -35,10 +36,15 @@ export default new Router({
       path: '/about',
       component: aboutPage
     }, {
-      path: '/type',
+      path: '/categories',
       component: typePage
-    }, {
-      path: '/tag',
+    },
+    {
+      path: '/categories/details',
+      component: categoriesDetailsPage
+    },
+    {
+      path: '/archives',
       component: tagPage
     }, {
       path: '*',

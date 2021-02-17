@@ -50,11 +50,11 @@ export default {
     },
     goToType: function () {
       this.changeState(false)
-      this.$router.push({path: '/type'})
+      this.$router.push({path: '/categories'})
     },
     goToLabel: function () {
       this.changeState(false)
-      this.$router.push({path: '/tag'})
+      this.$router.push({path: '/archives'})
     },
     login: function () {
       this.changeState(false)

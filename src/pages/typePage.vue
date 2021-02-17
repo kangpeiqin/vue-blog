@@ -1,18 +1,18 @@
 <template>
   <div>
     <div>
-      <classification></classification>
+      <categories></categories>
     </div>
   </div>
 </template>
 
 <script>
 // import Type from '../components/Type'
-import Classification from '../components/Classification'
+import Categories from '../components/Categories'
 export default {
   name: 'typePage',
   components: {
-    Classification
+    Categories
   },
   created () {
 
