@@ -4,9 +4,10 @@
     <div class="article-content">
       <div class="meta">
         <ul v-for="(type, index) in types" :key="index" style="margin-bottom: 15px">
-          <li>
+          <li style="list-style: none" @click="goToDetails">
             <a class="classification">
-              <h1>{{type.name}}({{type.artNum}})</h1>
+              <h1> <img src="../assets/images/lantern.png" style="width: 30px;height: 30px;margin-bottom: -5px"/>
+                {{type.category.name}}({{type.postNum}})</h1>
             </a>
           </li>
         </ul>
@@ -17,6 +18,7 @@
 
 <script>
 import config from 'config'
+
 export default {
   name: 'Classification',
   data () {
@@ -24,33 +26,52 @@ export default {
       loading: true,
       total: '12',
       article: {
-        title: '梦境', browseTimes: '22', createTime: '2020-09-10', imgUrl: 'http://localhost:8080/static/img/background.1272215.jpg', content: 'This is a test'
+        title: '梦境',
+        browseTimes: '22',
+        createTime: '2020-09-10',
+        imgUrl: 'http://localhost:8080/static/img/background.1272215.jpg',
+        content: 'This is a test'
       },
-      types: [{id: '1', name: '随笔', artNum: '12'},
-        {id: '2', name: '考研笔记', artNum: '2'},
-        {id: '2', name: '旅游', artNum: '21'},
-        {id: '2', name: '其他', artNum: '22'},
-        {id: '2', name: '服务器端', artNum: '28'},
-        {id: '2', name: '手机端', artNum: '2'}
+      types: [
+        {
+          postNum: '5',
+          category: {id: '1', name: '随笔'}
+        }
+
       ]
     }
   },
+  methods: {
+    getAll: function () {
+      this.getRequest(config.apiBaseUrl + '/api/category', null).then(resp => {
+        if (resp) {
+          console.log('classification:', resp)
+          this.types = resp.data
+          this.total = resp.data.length
+        }
+      })
+    },
+    goToDetails: function () {
+      alert()
+    }
+  },
   created () {
-    const axios = require('axios')
-    var vm = this
-    axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
-      .then(function (response) {
-        // handle success
-        console.log(response)
-        vm.article = response.data.data
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error)
-      })
-      .then(function () {
-        // always executed
-      })
+    this.getAll()
+    // const axios = require('axios')
+    // var vm = this
+    // axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
+    //   .then(function (response) {
+    //     // handle success
+    //     console.log(response)
+    //     vm.article = response.data.data
+    //   })
+    //   .catch(function (error) {
+    //     // handle error
+    //     console.log(error)
+    //   })
+    //   .then(function () {
+    //     // always executed
+    //   })
   }
 }
 </script>
@@ -60,17 +81,21 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Trebuchet MS",Arial,"Lucida Grande",Verdana,Lucida,Helvetica,sans-serif;
+    font-family: "Trebuchet MS", Arial, "Lucida Grande", Verdana, Lucida, Helvetica, sans-serif;
   }
+
   h1 {
     font-size: 1.5em;
     font-weight: 500;
     color: black;
   }
-  .classification:hover{
+
+  .classification:hover {
     cursor: pointer;
     color: #8bb5f5;
+    text-decoration: none;
   }
+
   section {
     /*display: flex;*/
     /*flex-direction: column;*/
@@ -85,6 +110,7 @@ export default {
     /*color: #2e2e2e;*/
     margin-top: 34px;
   }
+
   /* 大标题下方红线 */
   .title::after {
     content: "";
@@ -100,13 +126,14 @@ export default {
     margin-top: 120px;
   }
 
-  .article-content{
+  .article-content {
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
     padding: 24px;
     transition: 0.4s;
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
   /* 动态图片 */
   .act-image-wrapper img {
     min-height: 200px;
@@ -128,13 +155,15 @@ export default {
   .article-content .meta > p:last-child {
     margin-left: 36px;
   }
+
   .article-content article {
     /*color: #8b8b8b;*/
     letter-spacing: 0.54px;
     line-height: 24px;
   }
+
   @media (max-width: 768px) {
-    section{
+    section {
       padding: 0 40px;
     }
   }

@@ -1,5 +1,8 @@
 <template>
   <section class="article">
+    <el-backtop :visibility-height="80">
+      <i class="el-icon-caret-top"></i>
+    </el-backtop>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">返回</el-breadcrumb-item>
       <el-breadcrumb-item><a href="/">上一篇</a></el-breadcrumb-item>
@@ -21,8 +24,26 @@
 <!--        {{article.content}}-->
       </article>
     </div>
-    <div>
-      <comment v-bind="comment"></comment>
+    <div v-show="article.allowComment">
+      <el-form :inline="true" :model="dynamicValidateForm" ref="dynamicValidateForm" style="text-align: left;padding: 42px">
+        <el-form-item
+          prop="email"
+          label="邮箱"
+          :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+    ]"
+        >
+          <el-input v-model="dynamicValidateForm.email"></el-input>
+        </el-form-item>
+        <el-form-item
+          label="用户名"
+          :rules="{required: true, message: '用户名不能为空', trigger: 'blur'}"
+        >
+          <el-input v-model="dynamicValidateForm.userName"></el-input>
+        </el-form-item>
+      </el-form>
+      <comment v-bind="comment" ref="comm" v-on:doSend="this.doSend" v-on:doChidSend="doChidSend(arguments)"></comment>
     </div>
   </section>
 </template>
@@ -31,6 +52,7 @@
 import {mapState} from 'vuex'
 import config from 'config'
 import comment from 'hbl-comment'
+import {Message} from 'element-ui'
 export default {
   name: 'PostDetail',
   components: {
@@ -40,17 +62,126 @@ export default {
     return {
       loading: true,
       comment: {
-        commentNum: 10,
-        placeholder: '在此输入评论'
+        commentNum: 2,
+        // placeholder: '在此输入评论',
+        // authorId: 2,
+        // label: '作者',
+        commentList: [{
+          id: 1,
+          commentUser: {
+            id: 1,
+            nickName: '评论者1',
+            avatar: 'http://127.0.0.1:8085/image/37d9cae7-16a7-4a94-99d3-bb3966ef8ec0.png'
+          },
+          targetUser: {
+            id: 1,
+            nickName: '评论者1'
+          },
+          content: '评论内容1'
+        },
+        {
+          id: 2,
+          commentUser: {
+            id: 2,
+            nickName: '评论者2'
+          },
+          content: '评论内容2',
+          createDate: '2021-02-15',
+          childrenList: [
+            {
+              id: 12,
+              commentUser: {
+                id: 21,
+                nickName: '评论者1'
+              },
+              targetUser: {
+                id: 1,
+                nickName: '评论者1'
+              },
+              content: '评论内容3'
+            }
+          ]
+        }
+        ]
       },
       article: {
-        title: '梦境', browseTimes: '22', createTime: '2020-09-10', coverImage: 'http://localhost:8080/static/img/background.1272215.jpg', formatContent: 'This is a test'
+        title: '梦境',
+        browseTimes: '22',
+        createTime: '2020-09-10',
+        coverImage: 'http://localhost:8080/static/img/background.1272215.jpg',
+        formatContent: 'This is a test',
+        allowComment: false
+      },
+      dynamicValidateForm: {
+        userName: '',
+        email: ''
       }
     }
   },
   computed: mapState({
     articleId: state => state.articleId
   }),
+  methods: {
+    doSend: function () {
+      this.$refs['dynamicValidateForm'].validate((valid) => {
+        if (valid) {
+          let content = this.$refs['comm']
+          console.log(content.textareaMap[0])
+          console.log('formContent', this.dynamicValidateForm)
+          let data = {
+            author: this.dynamicValidateForm.userName,
+            commentStatus: true,
+            content: content.textareaMap[0],
+            email: this.dynamicValidateForm.email,
+            parentId: '0',
+            postId: this.articleId
+          }
+          this.submitComment(data)
+        } else {
+          Message.error({message: '请填写邮箱和用户名'})
+        }
+      })
+    },
+    doChidSend: function (argument) {
+      console.log('回复一下：', argument)
+      let data = {
+        author: this.dynamicValidateForm.userName,
+        commentStatus: true,
+        content: argument[0],
+        email: this.dynamicValidateForm.email,
+        parentId: argument[2],
+        postId: this.articleId
+      }
+      this.submitComment(data)
+    },
+    getCommentData: function () {
+      this.getRequest(config.apiBaseUrl + '/api/comment/' + this.articleId, null).then(resp => {
+        if (resp) {
+          console.log('comment', resp.data)
+          this.comment = resp.data
+        }
+      })
+    },
+    submitComment: function (data) {
+      this.postRequest(config.apiBaseUrl + '/api/comment/', data).then(resp => {
+        console.log('commentResp:', resp)
+        this.getCommentData()
+      })
+    },
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    }
+  },
   created () {
     this.getRequest(config.apiBaseUrl + '/api/post/' + this.articleId, null).then(resp => {
       if (resp) {
@@ -58,6 +189,7 @@ export default {
         this.article = resp.data
       }
     })
+    this.getCommentData()
     // const axios = require('axios')
     // var vm = this
     // axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
