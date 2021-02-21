@@ -7,6 +7,7 @@
       <li v-on:click="goToType()">分类</li>
       <li v-on:click="goToLabel()">归档</li>
       <li v-on:click=goToAbout()>关于我</li>
+      <li v-on:click="trending">GitHub Trending</li>
       <li v-on:click="login()">登陆</li>
       <github-pendant></github-pendant>
     </ul>
@@ -55,6 +56,9 @@ export default {
     goToLabel: function () {
       this.changeState(false)
       this.$router.push({path: '/archives'})
+    },
+    trending: function () {
+      this.$router.push({path: '/githubTrending'})
     },
     login: function () {
       this.changeState(false)

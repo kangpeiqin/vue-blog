@@ -9,6 +9,8 @@ import aboutPage from '../pages/aboutPage'
 import typePage from '../pages/typePage'
 import tagPage from '../pages/tagPage'
 import categoriesDetailsPage from '../pages/categoriesDetailsPage'
+import postEditorPage from '../pages/postEditorPage'
+import githubTrendingPage from '../pages/githubTrendingPage'
 
 Vue.use(Router)
 
@@ -42,6 +44,14 @@ export default new Router({
     {
       path: '/categories/details',
       component: categoriesDetailsPage
+    },
+    {
+      path: '/editor',
+      component: postEditorPage
+    },
+    {
+      path: '/githubTrending',
+      component: githubTrendingPage
     },
     {
       path: '/archives',
