@@ -1,21 +1,24 @@
 <template>
   <section class="article">
-    <h1 class="title">目前共计 {{total}} 个分类</h1>
+<!--    <el-breadcrumb separator="/">-->
+<!--      <el-breadcrumb-item :to="{ path: '/categories' }">返回</el-breadcrumb-item>-->
+<!--    </el-breadcrumb>-->
+    <h1 class="title">{{this.category.name}}<span style="font-size: 5px">(分类)</span></h1>
     <div class="article-content">
       <div class="meta">
-        <ul v-for="(type, index) in types" :key="index" style="margin-bottom: 15px">
-          <li style="list-style: none" @click="goToDetails">
+        <ul v-for="(post, index) in postList" :key="index" style="margin-bottom: 15px">
+          <li style="list-style: none" @click="goToDetails(post)">
             <a class="classification">
-              <h1> <img src="../assets/images/iconfont.png" style="width: 30px;height: 30px;margin-bottom: -5px"/>
-                {{type.category.name}}({{type.postNum}})</h1>
+              <h1>{{post.createTime}} &nbsp;&nbsp;{{post.title}}</h1>
             </a>
           </li>
         </ul>
       </div>
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="100">
+      <el-pagination layout="prev, pager, next" background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageNum" :page-size="pageSize"
+        :total="total">
       </el-pagination>
     </div>
   </section>
@@ -23,45 +26,62 @@
 
 <script>
 import config from 'config'
+import {mapState} from 'vuex'
 
 export default {
   name: 'ClassificationDetails',
   data () {
     return {
+      pageNum: 1,
+      pageSize: 3,
       loading: true,
-      total: '12',
-      article: {
-        title: '梦境',
-        browseTimes: '22',
-        createTime: '2020-09-10',
-        imgUrl: 'http://localhost:8080/static/img/background.1272215.jpg',
-        content: 'This is a test'
-      },
-      types: [
+      total: 5,
+      categoryName: '随笔',
+      postList: [
         {
-          postNum: '5',
-          category: {id: '1', name: '随笔'}
+          id: '1',
+          createTime: '2021-02-17',
+          title: '第一篇日志'
+        }, {
+          id: '2',
+          createTime: '2021-02-18',
+          title: '第二篇日志'
         }
-
       ]
     }
   },
   methods: {
-    getAll: function () {
-      this.getRequest(config.apiBaseUrl + '/api/category', null).then(resp => {
+    getData: function () {
+      this.getRequest(config.apiBaseUrl + '/api/category/' + this.category.id, {pageNum: this.pageNum}).then(resp => {
         if (resp) {
           console.log('classification:', resp)
-          this.types = resp.data
-          this.total = resp.data.length
+          this.postList = resp.data.records
+          this.pageSize = resp.data.size
+          this.total = resp.data.total
         }
       })
     },
-    goToDetails: function () {
-      alert()
+    handleSizeChange (pageSize) {
+      console.log(`每页 ${pageSize} 条`)
+      this.pageSize = pageSize
+      this.getData()
+    },
+    handleCurrentChange (pageNum) {
+      console.log(`当前页: ${pageNum}`)
+      this.pageNum = pageNum
+      this.getData()
+    },
+    goToDetails: function (param) {
+      this.$store.commit('setArticleId', param.id)
+      this.$store.commit('setSearchShow', false)
+      this.$router.push({path: '/article'})
     }
   },
+  computed: mapState({
+    category: state => state.category
+  }),
   created () {
-    this.getAll()
+    this.getData()
   }
 }
 </script>

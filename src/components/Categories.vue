@@ -4,18 +4,19 @@
     <div class="article-content">
       <div class="meta">
         <ul v-for="(type, index) in types" :key="index" style="margin-bottom: 15px">
-          <li style="list-style: none" @click="goToDetails">
+          <li style="list-style: none" @click="goToDetails(type)">
             <a class="classification">
               <h1> <img src="../assets/images/lantern.png" style="width: 30px;height: 30px;margin-bottom: -5px"/>
-                {{type.category.name}}({{type.postNum}})</h1>
+                {{type.name}}({{type.postNum}})</h1>
             </a>
           </li>
         </ul>
       </div>
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="100">
+      <el-pagination layout="prev, pager, next" background
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"
+                     :current-page="pageNum" :page-size="pageSize"
+                     :total="total">
       </el-pagination>
     </div>
   </section>
@@ -23,13 +24,16 @@
 
 <script>
 import config from 'config'
+import {mapState} from 'vuex'
 
 export default {
   name: 'Classification',
   data () {
     return {
+      pageNum: 1,
+      pageSize: 3,
       loading: true,
-      total: '12',
+      total: 5,
       article: {
         title: '梦境',
         browseTimes: '22',
@@ -40,26 +44,40 @@ export default {
       types: [
         {
           postNum: '5',
-          category: {id: '1', name: '随笔'}
+          name: '随笔'
         }
-
       ]
     }
   },
   methods: {
     getAll: function () {
-      this.getRequest(config.apiBaseUrl + '/api/category', null).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/category', {pageNum: this.pageNum}).then(resp => {
         if (resp) {
           console.log('classification:', resp)
-          this.types = resp.data
-          this.total = resp.data.length
+          this.types = resp.data.records
+          this.pageSize = resp.data.size
+          this.total = resp.data.total
         }
       })
     },
-    goToDetails: function () {
-      alert()
+    handleSizeChange (pageSize) {
+      console.log(`每页 ${pageSize} 条`)
+      this.pageSize = pageSize
+      this.getAll()
+    },
+    handleCurrentChange (pageNum) {
+      console.log(`当前页: ${pageNum}`)
+      this.pageNum = pageNum
+      this.getAll()
+    },
+    goToDetails: function (param) {
+      this.$router.push({path: '/categories/details'})
+      this.$store.commit('setCategory', {id: param.id, name: param.name})
     }
   },
+  computed: mapState({
+    category: state => state.category
+  }),
   created () {
     this.getAll()
   }

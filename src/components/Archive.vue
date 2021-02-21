@@ -3,26 +3,25 @@
     <div class="article-content">
       <div class="meta">
         <el-timeline>
-          <el-timeline-item style="font-size: 20px" timestamp="2018/4/12" placement="top">
-            <el-card>
-              <h4>更新 Github 模板</h4>
-              <p>王小虎 提交于 2018/4/12 20:46</p>
-            </el-card>
-          </el-timeline-item>
-          <el-timeline-item timestamp="2018/4/3" placement="top">
-            <el-card>
-              <h4>更新 Github 模板</h4>
-              <p>王小虎 提交于 2018/4/3 20:46</p>
-            </el-card>
-          </el-timeline-item>
-          <el-timeline-item timestamp="2018/4/2" placement="top">
-            <el-card>
-              <h4>更新 Github 模板</h4>
-              <p>王小虎 提交于 2018/4/2 20:46</p>
-            </el-card>
-          </el-timeline-item>
+          <div  v-for="(item, index) in list" :key="index">
+            <el-timeline-item type="primary" size="large" placement="top" style="height:70px;font-weight: 900;color: black;"
+                              :timestamp="item.year.toString()+'年'">
+            </el-timeline-item>
+            <el-timeline-item type="info" size="normal" placement="top" style="height:80px;font-size: 15px;font-weight: 600"
+                              v-for="(post, key) in item.posts"
+                              :key="key"
+                              :timestamp="post.createTime">
+              <li style="cursor: pointer" @click="goToDetails(post)">{{post.title}}</li>
+            </el-timeline-item>
+          </div>
         </el-timeline>
       </div>
+      <el-pagination layout="prev, pager, next" background
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"
+                     :current-page="pageNum" :page-size="pageSize"
+                     :total="total">
+      </el-pagination>
     </div>
   </section>
 </template>
@@ -34,35 +33,64 @@ export default {
   data () {
     return {
       loading: true,
-      total: '12',
-      article: {
-        title: '梦境', browseTimes: '22', createTime: '2020-09-10', imgUrl: 'http://localhost:8080/static/img/background.1272215.jpg', content: 'This is a test'
-      },
-      types: [{id: '1', name: '随笔', artNum: '12'},
-        {id: '2', name: '考研笔记', artNum: '2'},
-        {id: '2', name: '旅游', artNum: '21'},
-        {id: '2', name: '其他', artNum: '22'},
-        {id: '2', name: '服务器端', artNum: '28'},
-        {id: '2', name: '手机端', artNum: '2'}
-      ]
+      pageNum: 1,
+      pageSize: 4,
+      total: 4,
+      list: [{
+        year: '2020',
+        posts: [{
+          title: '通过审核',
+          createTime: '2018-04-13'
+        }, {
+          title: '创建成功',
+          createTime: '2018-04-11'
+        }, {
+          title: '创建成功',
+          createTime: '2018-04-11'
+        }, {
+          title: '创建成功',
+          createTime: '2018-04-11'
+        }]
+      }, {
+        year: '2018',
+        posts: [{
+          title: '通过审核',
+          createTime: '2018-04-13'
+        }, {
+          title: '创建成功',
+          createTime: '2018-04-11'
+        }]
+      }]
+    }
+  },
+  methods: {
+    handleSizeChange (pageSize) {
+      console.log(`每页 ${pageSize} 条`)
+      this.pageSize = pageSize
+      this.getData()
+    },
+    handleCurrentChange (pageNum) {
+      console.log(`当前页: ${pageNum}`)
+      this.pageNum = pageNum
+      this.getData()
+    },
+    goToDetails: function (param) {
+      this.$store.commit('setArticleId', param.id)
+      this.$store.commit('setSearchShow', false)
+      this.$router.push({path: '/article'})
+    },
+    getData: function () {
+      this.getRequest(config.apiBaseUrl + '/api/post/archives', {pageNum: this.pageNum, pageSize: this.pageSize}).then(resp => {
+        if (resp) {
+          console.log('archivies:', resp)
+          this.list = resp.data.list
+          this.total = resp.data.total
+        }
+      })
     }
   },
   created () {
-    const axios = require('axios')
-    var vm = this
-    axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
-      .then(function (response) {
-        // handle success
-        console.log(response)
-        vm.article = response.data.data
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error)
-      })
-      .then(function () {
-        // always executed
-      })
+    this.getData()
   }
 }
 </script>
@@ -90,7 +118,6 @@ export default {
     min-height: 600px;
     padding: 0 80px;
   }
-
   /* 区域大标题 */
   .title {
     /*font-size: 25px;*/

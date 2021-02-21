@@ -6,7 +6,8 @@ export default new Vuex.Store({
   state: {
     qryContent: '',
     articleId: '',
-    searchShow: false
+    searchShow: false,
+    category: {id: '', name: ''}
   },
   mutations: {
     setQryContent (state, content) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     setSearchShow (state, show) {
       state.searchShow = show
+    },
+    setCategory (state, category) {
+      state.category = category
     }
   },
   actions: {
