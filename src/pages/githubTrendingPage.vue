@@ -24,22 +24,36 @@
           </el-tab-pane>
           <el-tab-pane label="Developer" name="second"></el-tab-pane>
         </el-tabs>
-        <el-card class="box-card" v-for="(item, index) in trendingData" :key="index" style="margin-top: 20px">
-          <div class="text item">
-            <div>项目： <a v-bind:href="item.url">{{item.title}}</a> &nbsp; 作者：{{item.author}} &nbsp; 语言：{{item.programmingLanguage}}
-            &nbsp; stars：{{item.stars}} &nbsp; forks：{{item.forks}} &nbsp;
-              贡献者：
-              <span v-for="(contribute,dex) in item.contributors" :key="dex">
-                <a v-bind:href="contribute.accountLink">
+        <div class="trending" v-show="trendingShow">
+          <el-card class="box-card" v-for="(item, index) in trendingData" :key="index" style="margin-top: 20px">
+            <div class="text item">
+              <div>项目： <a v-bind:href="item.url" target="view_window">{{item.title}}</a> &nbsp; 作者：{{item.author}} &nbsp; 语言：{{item.programmingLanguage}}
+                &nbsp; stars：{{item.stars}} &nbsp; forks：{{item.forks}} &nbsp;
+                贡献者：
+                <span v-for="(contribute,dex) in item.contributors" :key="dex">
+                <a v-bind:href="contribute.accountLink" target="view_window">
                   <img v-bind:src="contribute.avatar" style="width: 16px;height: 16px;margin-right: 5px;margin-bottom: -2px"/>
                 </a>
                 </span>
-              <div>
-                <span>项目简介：{{item.description}}</span>
+                <div>
+                  <span>项目简介：{{item.description}}</span>
+                </div>
               </div>
             </div>
-          </div>
-        </el-card>
+          </el-card>
+        </div>
+        <div class="trending" v-show="developerShow">
+          <el-card class="box-card" v-for="(item, index) in developerList" :key="index" style="margin-top: 20px">
+            <div class="text item">
+              <div>作者：<img v-bind:src="item.avatar" style="width: 16px;height: 16px;margin-right: 5px;margin-bottom: -2px"/>
+                {{item.author}} &nbsp;
+                <a v-bind:href="item.accountLink" target="view_window">账号</a> &nbsp;
+                最火仓库：<a v-bind:href="item.popularRepoUrl" target="view_window">{{item.popularRepoName}}</a> &nbsp;
+                <p>描述：{{item.popularRepoDescription}}</p>
+              </div>
+            </div>
+          </el-card>
+        </div>
       </div>
     </div>
   </section>
@@ -52,20 +66,22 @@ export default {
   data () {
     return {
       currentLang: '',
-      currentTime: '',
+      currentTime: 'daily',
       language: 'Any',
       since: 'Today',
       loading: true,
       activeName: 'first',
       total: 4,
+      trendingShow: true,
+      developerShow: false,
       languageList: [
         {'name': 'Any', index: ''},
         {'name': 'Java', index: 'java'},
         {'name': 'Python', index: 'python'},
         {'name': 'Go', index: 'go'},
         {'name': 'JavaScript', index: 'javascript'},
-        {'name': 'C++', index: 'C++'},
-        {'name': 'C', index: 'C'}
+        {'name': 'C++', index: 'c++'},
+        {'name': 'C', index: 'c'}
       ],
       timeList: [
         {'name': 'Today', index: 'daily'},
@@ -91,12 +107,29 @@ export default {
               accountLink: 'https://www.github.com/LiWenGu'
             }
           ]
-        }]
+        }],
+      developerList: [
+        {
+          author: 'Isaac Hinman',
+          avatar: 'https://avatars.githubusercontent.com/u/10575782?s=96&v=4',
+          accountLink: 'https://www.github.com/isaachinman',
+          popularRepoName: 'next-i18next',
+          popularRepoUrl: 'https://www.github.com/isaachinman/next-i18next',
+          popularRepoDescription: 'The easiest way to translate your NextJs apps.'
+        }
+      ]
     }
   },
   methods: {
     handleClick (tab, event) {
-      console.log(tab, event)
+      console.log(tab.index)
+      if (tab.index === '0') {
+        this.trendingShow = true
+        this.developerShow = false
+      } else {
+        this.trendingShow = false
+        this.developerShow = true
+      }
     },
     chooseLanguage (item) {
       this.language = item.name
@@ -117,10 +150,18 @@ export default {
           this.trendingData = resp.data
         }
       })
+    },
+    getDeveloperList: function () {
+      this.getRequest(config.apiBaseUrl + '/api/trending/developer', null).then(resp => {
+        if (resp) {
+          this.developerList = resp.data
+        }
+      })
     }
   },
   created () {
     this.getData()
+    this.getDeveloperList()
   }
 }
 </script>
