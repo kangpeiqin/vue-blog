@@ -2,7 +2,7 @@
   <nav class="sticky">
     <div class="logo">KANG'S BLOG</div>
     <ul class="nav-menu">
-      <li id="my-input" v-show="searchShow"><search-input></search-input></li>
+<!--      <li id="my-input" v-show="searchShow"><search-input></search-input></li>-->
       <li v-on:click=goToIndex()>首页</li>
       <li v-on:click="goToType()">分类</li>
       <li v-on:click="goToLabel()">归档</li>
@@ -43,7 +43,7 @@ export default {
     },
     goToIndex: function () {
       this.changeState(true)
-      this.$router.push({path: '/'})
+      this.$router.push({path: '/index'})
     },
     goToAbout: function () {
       this.changeState(false)
@@ -62,7 +62,7 @@ export default {
     },
     login: function () {
       this.changeState(false)
-      this.$router.push({path: '/loginPage'})
+      this.$router.push({path: '/login'})
     },
     changeState: function (show) {
       this.$store.commit('setSearchShow', show)

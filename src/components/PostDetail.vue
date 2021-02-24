@@ -4,7 +4,7 @@
       <i class="el-icon-caret-top"></i>
     </el-backtop>
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">返回</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/index' }">返回</el-breadcrumb-item>
       <el-breadcrumb-item><a href="/">上一篇</a></el-breadcrumb-item>
       <el-breadcrumb-item><a href="/">下一篇</a></el-breadcrumb-item>
     </el-breadcrumb>
