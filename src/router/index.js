@@ -8,5 +8,5 @@ import {
 Vue.use(Router)
 
 export default new Router({
-  routes: constantRouterMap.concat(routerMap)
+  routes: routerMap.concat(constantRouterMap)
 })

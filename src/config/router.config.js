@@ -1,4 +1,5 @@
 import BasicLayout from '@/layout/BasicLayout'
+// import AdminLayout from '@/layout/AdminLayout'
 
 export const routerMap = [
   {
@@ -48,11 +49,6 @@ export const routerMap = [
         name: 'loginPage',
         component: () => import('@/pages/loginPage'),
         meta: {title: '登录'}
-      },
-      {
-        path: '*',
-        name: 'NotFound',
-        component: () => import('@/exception/404')
       }
     ]
   }
@@ -60,6 +56,11 @@ export const routerMap = [
 export const constantRouterMap = [
   {
     path: '/admin',
+    name: 'AdminLayout',
+    component: () => import('@/layout/AdminLayout')
+  },
+  {
+    path: '*',
     name: 'NotFound',
     component: () => import('@/exception/404')
   }
