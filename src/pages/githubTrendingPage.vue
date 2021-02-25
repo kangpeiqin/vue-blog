@@ -1,5 +1,8 @@
 <template>
   <section class="article">
+    <el-backtop :visibility-height="80">
+      <i class="el-icon-caret-top"></i>
+    </el-backtop>
     <div class="article-content">
       <div class="meta">
         <el-tabs v-model="activeName" @tab-click="handleClick">

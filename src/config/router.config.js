@@ -4,7 +4,7 @@ import BasicLayout from '@/layout/BasicLayout'
 export const routerMap = [
   {
     path: '/',
-    name: 'index',
+    name: 'BasicLayout',
     component: BasicLayout,
     meta: {title: '首页'},
     redirect: '/index',
@@ -37,11 +37,13 @@ export const routerMap = [
       {
         path: '/article',
         name: 'article',
+        meta: {keepAlive: false},
         component: () => import('@/pages/postDetailPage')
       },
       {
         path: '/categories/details',
         name: 'categoriesDetails',
+        meta: {keepAlive: false},
         component: () => import('@/pages/categoriesDetailsPage')
       },
       {
@@ -57,7 +59,24 @@ export const constantRouterMap = [
   {
     path: '/admin',
     name: 'AdminLayout',
-    component: () => import('@/layout/AdminLayout')
+    component: () => import('@/layout/AdminLayout'),
+    children: [
+      {
+        path: '/postView',
+        name: 'postView',
+        component: () => import('@/admin/views/postView')
+      },
+      {
+        path: '/dashBoard',
+        name: 'dashBoard',
+        component: () => import('@/admin/views/DashBoard')
+      },
+      {
+        path: '/editor',
+        name: 'postEditor',
+        component: () => import('@/admin/views/postEditor')
+      }
+    ]
   },
   {
     path: '*',

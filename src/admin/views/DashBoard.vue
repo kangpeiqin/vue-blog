@@ -1,0 +1,59 @@
+<template>
+  <div>
+    <el-row :gutter="12" style="font-size: 30px">
+      <el-col :span="8">
+        <el-card shadow="hover">
+          文章总数
+          <div>
+            {{postCount}}
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card shadow="hover">
+          评论总数
+          <div>
+            {{commentCount}}
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card shadow="hover">
+          阅读量
+          <div>{{visitCount}}</div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <div>
+      <el-row :gutter="12" >
+        <el-col :span="24">
+          <el-card shadow="hover">
+              <div style="font-size: 20px">新动态</div>
+            <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane label="最近文章" name="first">最近文章</el-tab-pane>
+              <el-tab-pane label="最近评论" name="second">最近评论</el-tab-pane>
+              <el-tab-pane label="操作记录" name="third">操作记录</el-tab-pane>
+            </el-tabs>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'DashBoard',
+  data () {
+    return {
+      postCount: 15,
+      commentCount: 16,
+      visitCount: 200
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

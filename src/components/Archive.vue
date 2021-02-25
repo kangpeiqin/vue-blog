@@ -1,5 +1,9 @@
 <template>
   <section class="article">
+    <el-backtop :visibility-height="80">
+      <i class="el-icon-caret-top"></i>
+    </el-backtop>
+    <h1 class="title">很好！目前共计 {{total}} 篇文章，继续努力</h1>
     <div class="article-content">
       <div class="meta">
         <el-timeline>
@@ -34,7 +38,7 @@ export default {
     return {
       loading: true,
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 10,
       total: 4,
       list: [{
         year: '2020',

@@ -1,7 +1,7 @@
 <template>
     <div>
       <global-header></global-header>
-<!--      <route-view />-->
+      <route-view />
     </div>
 </template>
 
