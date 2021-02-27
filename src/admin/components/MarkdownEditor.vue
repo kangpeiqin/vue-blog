@@ -1,6 +1,6 @@
 <template>
   <div>
-    <halo-editor
+    <halo-editor style="min-height: 600px;margin-bottom: 30px;border-color: #9991e6;"
       ref="md"
       v-model="originalContentData"
       :boxShadow="false"
@@ -23,10 +23,25 @@ export default {
   components: {
     haloEditor
   },
+  props: {
+    originalContent: {
+      type: String,
+      required: false,
+      default: ''
+    }
+  },
   data () {
     return {
       toolbars,
       originalContentData: ''
+    }
+  },
+  watch: {
+    originalContent (val) {
+      this.originalContentData = val
+    },
+    originalContentData (val) {
+      this.$emit('onContentChange', val)
     }
   },
   methods: {

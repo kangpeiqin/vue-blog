@@ -50,18 +50,20 @@ export const postKeyValueRequest = (url, params) => {
     }
   })
 }
-export const postRequest = (url, params) => {
+export const postRequest = (url, params, headers) => {
   return axios({
     method: 'post',
     url: `${base}${url}`,
-    data: params
+    data: params,
+    headers: headers
   })
 }
-export const putRequest = (url, params) => {
+export const putRequest = (url, params, headers) => {
   return axios({
     method: 'put',
     url: `${base}${url}`,
-    data: params
+    data: params,
+    headers: headers
   })
 }
 export const getRequest = (url, params) => {
@@ -71,10 +73,11 @@ export const getRequest = (url, params) => {
     params: params
   })
 }
-export const deleteRequest = (url, params) => {
+export const deleteRequest = (url, params, headers) => {
   return axios({
     method: 'delete',
     url: `${base}${url}`,
-    params: params
+    params: params,
+    headers: headers
   })
 }

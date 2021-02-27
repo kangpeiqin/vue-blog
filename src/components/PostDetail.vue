@@ -20,7 +20,7 @@
         <p class="comments"><i class="far fa-comments">阅读&nbsp;&nbsp;{{article.browseTimes}}</i> </p>
       </div>
 <!--      <h2 class="act-title">{{message}}</h2>-->
-      <article class="post-content" v-html="article.formatContent">
+      <article class="post-content" v-html="article.originalContent">
 <!--        {{article.content}}-->
       </article>
     </div>
@@ -110,6 +110,7 @@ export default {
         createTime: '2020-09-10',
         coverImage: 'http://localhost:8080/static/img/background.1272215.jpg',
         formatContent: 'This is a test',
+        originalContent: '',
         allowComment: false
       },
       dynamicValidateForm: {
