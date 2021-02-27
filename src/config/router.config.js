@@ -60,20 +60,30 @@ export const constantRouterMap = [
     path: '/admin',
     name: 'AdminLayout',
     component: () => import('@/layout/AdminLayout'),
+    beforeEnter (to, from, next) {
+      if (sessionStorage.getItem('token') === null) {
+        next('/login')
+      } else {
+        next()
+      }
+    },
     children: [
       {
         path: '/postView',
         name: 'postView',
+        meta: {requireAuth: true},
         component: () => import('@/admin/views/postView')
       },
       {
         path: '/dashBoard',
         name: 'dashBoard',
+        meta: {requireAuth: true},
         component: () => import('@/admin/views/DashBoard')
       },
       {
         path: '/editor',
         name: 'postEditor',
+        meta: {requireAuth: true},
         component: () => import('@/admin/views/postEditor')
       }
     ]

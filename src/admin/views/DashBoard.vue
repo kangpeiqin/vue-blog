@@ -48,7 +48,13 @@ export default {
     return {
       postCount: 15,
       commentCount: 16,
-      visitCount: 200
+      visitCount: 200,
+      activeName: 'second'
+    }
+  },
+  methods: {
+    handleClick (tab, event) {
+      console.log(tab, event)
     }
   }
 }

@@ -8,7 +8,7 @@ axios.interceptors.response.use(success => {
   // Message.error({message: success.data.msg})
   // return
   // }
-  if (success.data.code === 500) {
+  if (success.data.code === 500 || success.data.code === 400 || success.data.code === 403 || success.data.code === 401) {
     Message.error({message: success.data.msg})
     // Message.success({message: success.data.msg})
   }

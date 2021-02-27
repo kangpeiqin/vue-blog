@@ -16,6 +16,8 @@
 <script>
 import { toolbars } from '@/assets/js/const'
 import { haloEditor } from 'halo-editor'
+import 'halo-editor/dist/css/index.css'
+
 export default {
   name: 'MarkdownEditor',
   components: {

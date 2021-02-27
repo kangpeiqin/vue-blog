@@ -11,7 +11,8 @@ import './assets/css/common.css'
 import 'element-ui/lib/theme-chalk/index.css'
 // import upperFirst from 'lodash/upperFirst'
 // import camelCase from 'lodash/camelCase'
-
+import '@/admin/ant_design_components'
+import 'ant-design-vue/dist/antd.css'
 import {postRequest, postKeyValueRequest, putRequest, deleteRequest, getRequest} from './utils/http'
 
 Vue.prototype.postRequest = postRequest
