@@ -128,12 +128,19 @@ export default {
       this.getData()
     },
     getData () {
-      this.getRequest(config.apiBaseUrl + '/api/post', {'pageNum': this.pageNum, 'pageSize': this.pageSize, 'keyWord': this.qryContent}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/post', {'pageNum': this.pageNum, 'pageSize': this.pageSize, postStatus: '1'}).then(resp => {
         if (resp) {
           console.log('data:', resp)
           this.post = resp.data.records
           this.total = resp.data.total
           this.tipShow = this.total === 0
+        }
+      })
+    },
+    getRecommend () {
+      this.getRequest(config.apiBaseUrl + '/api/post/recommend').then(resp => {
+        if (resp) {
+          this.recommendList = resp.data
         }
       })
     }
@@ -150,6 +157,7 @@ export default {
   },
   created () {
     this.getData()
+    this.getRecommend()
   }
 }
 </script>

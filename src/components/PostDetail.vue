@@ -14,10 +14,14 @@
         <img :src="article.coverImage" alt=""/>
       </div>
       <div class="meta">
-        <p class="date-published">
+        <p class="date-published" style="margin-right: 25px">
           <i class="far fa-calendar">{{article.createTime}}</i>
         </p>
-        <p class="comments"><i class="far fa-comments">阅读&nbsp;&nbsp;{{article.browseTimes}}</i> </p>
+        <p class="comments"><i class="far fa-comments" style="margin-right: 30px">浏览次数：{{article.browseTimes}}</i> </p>
+        <p class="category" style="float: right"><i>分类：{{article.categoryName}}</i> </p>
+        <p>
+          <el-tag v-for="(item,index) in postTags" :key="index" style="margin-top: -30px;margin-right: 10px">{{item}}</el-tag>
+        </p>
       </div>
 <!--      <h2 class="act-title">{{message}}</h2>-->
       <article class="post-content" v-html="article.formatContent">
@@ -61,6 +65,7 @@ export default {
   data () {
     return {
       loading: true,
+      postTags: [],
       comment: {
         commentNum: 2,
         // placeholder: '在此输入评论',
@@ -188,6 +193,9 @@ export default {
       if (resp) {
         console.log('article:', resp)
         this.article = resp.data
+        if (resp.data.tags !== null || resp.data.tags !== '') {
+          this.postTags = resp.data.tags.split(',')
+        }
       }
     })
     this.getCommentData()
@@ -304,10 +312,10 @@ export default {
 
   .post-content{
     text-align: left;
-    background-color: lightgoldenrodyellow;
-    border-radius: 22px;
+    /*background-color: lightgoldenrodyellow;*/
+    /*border-radius: 22px;*/
     padding: 30px;
-    box-shadow: #3a8ee6
+    /*box-shadow: #3a8ee6*/
   }
 
   @media (max-width: 768px) {
@@ -316,8 +324,8 @@ export default {
     }
     .post-content{
       text-align: left;
-      background-color: lightgoldenrodyellow;
-      padding: 2px;
+      /*background-color: lightgoldenrodyellow;*/
+      /*padding: 2px;*/
       box-shadow: #3a8ee6;
       -ms-overflow-x: scroll;
     }

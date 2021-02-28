@@ -94,11 +94,13 @@
 <script>
 import config from 'config'
 import ElSwitch from 'element-ui/packages/switch/src/component'
-
 export default {
   name: 'PostView',
   components: {ElSwitch},
   methods: {
+    deleteConfirm (row) {
+      console.log('confirm', row)
+    },
     edit (row) {
       console.log(row)
     },

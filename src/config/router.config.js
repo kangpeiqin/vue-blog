@@ -71,7 +71,7 @@ export const constantRouterMap = [
       {
         path: '/postView',
         name: 'postView',
-        meta: {requireAuth: true},
+        meta: {requireAuth: true, keepAlive: false},
         component: () => import('@/admin/views/postView')
       },
       {
