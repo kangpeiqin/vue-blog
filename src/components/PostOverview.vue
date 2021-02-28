@@ -5,7 +5,22 @@
       <i class="el-icon-caret-top"></i>
     </el-backtop>
     <noting-to-show v-show="tipShow"></noting-to-show>
-    <section id="company-activities" class="company-activities">
+    <el-switch style="float: left;margin-top: 50px"
+      v-model="choice" :active-value=true :inactive-value=false
+      active-text="所有文章"  active-color="#13ce66" inactive-color="#ff4949"
+      inactive-text="推荐文章" @change="makeChoice"
+    >
+    </el-switch>
+    <div class="article-content" v-show="!this.choice">
+      <div class="meta">
+        <ul v-for="(item, index) in recommendList" :key="index" style="margin-bottom: 15px">
+          <li style="list-style: none" @click="goToDetails(item)">
+            <h1><span>{{item.createTime}} : </span> <a>{{item.title}}</a></h1>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <section id="company-activities" class="company-activities" v-show="this.choice">
       <div class="activities">
         <!-- 动态 -->
         <div class="activity" v-for="(article, index) in post" :key="index">
@@ -39,7 +54,7 @@
         </div>
       </div>
     </section>
-    <div class="block" v-show="!tipShow">
+    <div class="block" v-show="!tipShow" v-if="choice">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -70,6 +85,16 @@ export default {
       pageSize: 3,
       loading: true,
       tipShow: false,
+      choice: true,
+      recommendList: [
+        {
+          title: 'Java8',
+          coverImage: '',
+          createTime: '2020年09月10日',
+          browseTimes: '21',
+          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
+        }
+      ],
       post: [
         {
           title: 'Java8',
@@ -82,6 +107,9 @@ export default {
     }
   },
   methods: {
+    makeChoice () {
+
+    },
     showDetail: function (blogId) {
       this.$store.commit('setArticleId', blogId)
       this.$store.commit('setSearchShow', false)
@@ -133,6 +161,38 @@ export default {
   box-sizing: border-box;
   font-family: Helvetica, "PingFang SC", "Microsoft Yahei", sans-serif;
   font-size: 14px;
+}
+.article-content .meta > p:last-child {
+  margin-left: 36px;
+}
+
+.article-content article {
+  /*color: #8b8b8b;*/
+  letter-spacing: 0.54px;
+  line-height: 24px;
+}
+
+@media (max-width: 768px) {
+  .article-content {
+    padding: 0 40px;
+  }
+}
+.article-content {
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  transition: 0.4s;
+  margin: 10px 20px 20px 20px;
+  width: 90%;
+}
+.article-content .meta {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #c6c6c6;
+  /*font-size: 30px;*/
+  display: flex;
+  min-height: 400px;
+  flex-direction: column;
+  align-items: center;
 }
 /* 图片默认宽度100% */
 img {
@@ -218,7 +278,7 @@ section {
 /* ============= 公司动态 ================== */
 /* 公司动态 */
 .company-activities {
-  margin-top: 88px;
+  margin-top: 10px;
 }
 
 /* 动态栅格布局 */

@@ -20,7 +20,7 @@
         <p class="comments"><i class="far fa-comments">阅读&nbsp;&nbsp;{{article.browseTimes}}</i> </p>
       </div>
 <!--      <h2 class="act-title">{{message}}</h2>-->
-      <article class="post-content" v-html="article.originalContent">
+      <article class="post-content" v-html="article.formatContent">
 <!--        {{article.content}}-->
       </article>
     </div>

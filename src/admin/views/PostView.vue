@@ -72,8 +72,8 @@
           label="操作"
           width="100">
           <template slot-scope="scope">
-            <el-button @click="editPost(scope.row)" type="text" size="small">编辑</el-button>
-            <el-button @click="deletePost(scope.row)" type="text" size="small">删除</el-button>
+            <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button @click="remove(scope.row)" type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -99,26 +99,66 @@ export default {
   name: 'PostView',
   components: {ElSwitch},
   methods: {
-    editPost (row) {
+    edit (row) {
       console.log(row)
     },
-    deletePost (row) {
+    remove (row) {
       console.log(row)
+      this.deleteRequest(config.apiBaseUrl + '/admin/post', {id: row.id}, this.headers).then(resp => {
+        if (resp) {
+          if (resp.code === 200) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.getPostList()
+          } else {
+            this.$message({
+              message: resp.msg,
+              type: 'warning'
+            })
+          }
+        }
+      })
     },
-    handleSizeChange () {
-
+    handleSizeChange (pageSize) {
+      this.pageSize = pageSize
+      this.getPostList()
     },
-    handleCurrentChange () {
-
+    handleCurrentChange (pageNum) {
+      this.pageNum = pageNum
+      this.getPostList()
     },
     postStatusSwitch (row) {
-
+      let data = {id: row.id, status: row.postStatus, type: 0}
+      this.changeStatus(data)
     },
     recommendSwitch (row) {
-      console.log(row)
+      let data = {id: row.id, status: row.recommend, type: 2}
+      this.changeStatus(data)
     },
     allowCommentSwitch (row) {
-      console.log(row)
+      let data = {id: row.id, status: row.allowComment, type: 1}
+      this.changeStatus(data)
+    },
+    changeStatus (data) {
+      this.putRequest(config.apiBaseUrl + '/admin/post/status/change', data, this.headers).then(resp => {
+        if (resp) {
+          console.log('status:', resp)
+          if (resp.code === 401 || resp.code === 403) {
+            this.$router.push('/login')
+          }
+        }
+      })
+    },
+    getPostList () {
+      this.getRequest(config.apiBaseUrl + '/api/post', {pageNum: this.pageNum, pageSize: this.pageSize}).then(resp => {
+        if (resp) {
+          console.log(resp)
+          this.tableData = resp.data.records
+          this.total = resp.data.total
+        }
+      })
     }
   },
   data () {
@@ -126,6 +166,9 @@ export default {
       pageNum: 1,
       pageSize: 10,
       total: 100,
+      headers: {
+        Authorization: sessionStorage.getItem('token')
+      },
       tableData: [{
         id: '1',
         title: '文章标题',
@@ -150,12 +193,7 @@ export default {
     }
   },
   created () {
-    this.getRequest(config.apiBaseUrl + '/api/post', {pageNum: this.pageNum, pageSize: this.pageSize}).then(resp => {
-      if (resp) {
-        console.log(resp)
-        this.tableData = resp.data.records
-      }
-    })
+    this.getPostList()
   }
 }
 </script>
