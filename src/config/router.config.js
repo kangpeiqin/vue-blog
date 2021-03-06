@@ -87,6 +87,12 @@ export const constantRouterMap = [
         component: () => import('@/admin/views/aboutView')
       },
       {
+        path: '/previewAbout',
+        name: 'previewAbout',
+        meta: {requireAuth: true, keepAlive: false},
+        component: () => import('@/admin/views/aboutPreview')
+      },
+      {
         path: '/viewTag',
         name: 'tagView',
         meta: {requireAuth: true, keepAlive: false},

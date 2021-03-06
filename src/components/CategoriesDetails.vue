@@ -4,7 +4,7 @@
 <!--      <el-breadcrumb-item :to="{ path: '/categories' }">返回</el-breadcrumb-item>-->
 <!--    </el-breadcrumb>-->
     <h1 class="title">{{this.category.name}}<span style="font-size: 5px">(分类)</span></h1>
-    <div class="article-content">
+    <div class="article-content" v-loading="loading">
       <div class="meta">
         <ul v-for="(post, index) in postList" :key="index" style="margin-bottom: 15px">
           <li style="list-style: none" @click="goToDetails(post)">
@@ -36,18 +36,8 @@ export default {
       pageSize: 3,
       loading: true,
       total: 5,
-      categoryName: '随笔',
-      postList: [
-        {
-          id: '1',
-          createTime: '2021-02-17',
-          title: '第一篇日志'
-        }, {
-          id: '2',
-          createTime: '2021-02-18',
-          title: '第二篇日志'
-        }
-      ]
+      categoryName: '',
+      postList: []
     }
   },
   methods: {
@@ -58,6 +48,7 @@ export default {
           this.postList = resp.data.records
           this.pageSize = resp.data.size
           this.total = resp.data.total
+          this.loading = false
         }
       })
     },

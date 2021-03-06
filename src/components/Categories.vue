@@ -1,5 +1,5 @@
 <template>
-  <section class="article">
+  <section class="article" v-loading="loading">
     <h1 class="title">目前共计 {{total}} 个分类</h1>
     <div class="article-content">
       <div class="meta">
@@ -45,6 +45,7 @@ export default {
           this.types = resp.data.records
           this.pageSize = resp.data.size
           this.total = resp.data.total
+          this.loading = false
         }
       })
     },

@@ -1,5 +1,5 @@
 <template>
-  <section class="article">
+  <section class="article" v-loading="loading">
     <el-backtop :visibility-height="80">
       <i class="el-icon-caret-top"></i>
     </el-backtop>
@@ -147,17 +147,21 @@ export default {
       this.getData()
     },
     getData: function () {
+      this.loading = true
       this.getRequest(config.apiBaseUrl + '/api/trending/' + this.currentLang, {since: this.currentTime}).then(resp => {
         if (resp) {
           console.log('trending:', resp)
           this.trendingData = resp.data
+          this.loading = false
         }
       })
     },
     getDeveloperList: function () {
+      this.loading = true
       this.getRequest(config.apiBaseUrl + '/api/trending/developer', null).then(resp => {
         if (resp) {
           this.developerList = resp.data
+          this.loading = false
         }
       })
     }

@@ -15,7 +15,11 @@
     </el-submenu>
     <el-menu-item index="3" @click="categoryView()">分类目录</el-menu-item>
     <el-menu-item index="4" @click="tagView()">标签管理</el-menu-item>
-    <el-menu-item index="5" @click="aboutView()">关于我</el-menu-item>
+    <el-submenu index="5">
+      <template slot="title">关于我</template>
+      <el-menu-item index="5-1" @click="aboutPreview()">预览</el-menu-item>
+      <el-menu-item index="5-2" @click="aboutView()">编辑</el-menu-item>
+    </el-submenu>
   </el-menu>
 </template>
 
@@ -31,6 +35,9 @@ export default {
   methods: {
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
+    },
+    aboutPreview () {
+      this.$router.push('/previewAbout')
     },
     aboutView () {
       this.$router.push('/viewAbout')

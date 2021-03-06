@@ -1,24 +1,16 @@
 <template>
   <div style="margin: 30px 60px 80px 80px">
     <div class="mb-4" style="margin-bottom: 20px">
-      <a-input
-        v-model="about.title"
-        placeholder="请输入标题"
-        size="large"
-      />
+      <h1> {{about.title}} </h1>
     </div>
     <div class="mb-4" style="margin-bottom: 20px">
-      <a-textarea style="height: 200px"
-                  v-model="about.content"
-                  placeholder="输入关于我的内容"
-                  size="large"
-      />
+      <div>{{about.content}}</div>
       <footer-tool-bar style="margin: 30px;">
         <a-space style="float: right;margin-bottom: 50px;">
           <a-button
             type="primary"
             @click="handle(false)"
-          >更新</a-button>
+          >编辑</a-button>
         </a-space>
       </footer-tool-bar>
     </div>
@@ -28,33 +20,21 @@
 <script>
 import FooterToolBar from '@/admin/components/FooterToolbar'
 import config from 'config'
-import {Message} from 'element-ui'
 
 export default {
-  name: 'aboutView',
+  name: 'aboutPreview',
   components: {
     FooterToolBar
   },
   data () {
     return {
       about: {
-        title: '',
-        content: ''
-      },
-      headers: {
-        Authorization: sessionStorage.getItem('token')
+        title: '标题',
+        content: '关于我'
       }
     }
   },
   methods: {
-    handle: function (draftOnly = false) {
-      this.putRequest(config.apiBaseUrl + '/api/about', this.about, this.headers).then(resp => {
-        if (resp.code === 200) {
-          Message.success({message: resp.msg})
-          this.$router.push('/previewAbout')
-        }
-      })
-    },
     getAboutMe () {
       this.getRequest(config.apiBaseUrl + '/api/about').then(resp => {
         if (resp) {
@@ -62,6 +42,9 @@ export default {
           this.about = resp.data
         }
       })
+    },
+    handle: function (draftOnly = false) {
+      this.$router.push('/viewAbout')
     }
   },
   created () {

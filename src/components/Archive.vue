@@ -1,5 +1,5 @@
 <template>
-  <section class="article">
+  <section class="article" v-loading="loading">
     <el-backtop :visibility-height="80">
       <i class="el-icon-caret-top"></i>
     </el-backtop>
@@ -60,11 +60,13 @@ export default {
       this.$router.push({path: '/article'})
     },
     getData: function () {
+      this.loading = true
       this.getRequest(config.apiBaseUrl + '/api/post/archives', {pageNum: this.pageNum, pageSize: this.pageSize}).then(resp => {
         if (resp) {
           console.log('archivies:', resp)
           this.list = resp.data.list
           this.total = resp.data.total
+          this.loading = false
         }
       })
     }

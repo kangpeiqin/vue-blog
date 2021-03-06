@@ -7,8 +7,8 @@
 <!--      </el-container>-->
 <!--    </el-container>-->
 <!--  </div>-->
-  <section class="article">
-    <h2 class="title">关于我</h2>
+  <section class="article" v-loading="loading">
+    <h2 class="title">{{about.title}}</h2>
     <div class="article-content">
       <div class="act-image-wrapper">
         <img src="../assets/images/background.jpg" alt=""/>
@@ -20,25 +20,36 @@
         <p class="comments"><i class="far fa-comments"></i> </p>
       </div>
       <!--      <h2 class="act-title">{{message}}</h2>-->
-      <article style="text-align: left;font-weight: 300;font-size: 20px">
-        &nbsp;&nbsp;<h1 style="text-align: center;font-size: 25px">Hello, I am KANG PEIQIN, a back-end development engineer based on Java.Welcome to my blog.</h1>
-        这是我基于Spring Boot + Vue开发的一款小型博客系统，作为一名好学开发者，平时有时候会去关注 Trending 趋势，
-        以获取最近 GitHub 上相关编程语言有哪些优秀项目和哪些开发者最火，所以自己写了个爬虫小程序定时抓取解析 GitHub Trending 数据并缓存，
-        集成到这个系统当中，以方便自己的查阅。自己是一个爱运动、爱思考、爱动手、爱学习的90后理工男，个人兴趣爱好比较广泛，接触比较多的是计算机，同时我也是一个摄影爱好，
-        喜欢用照片记录个人生活，放上照片的链接
-        (<a href="https://tuchong.com/16656346/" target="view_window" style="text-decoration: none;font-weight: 300;font-size: 20px">图虫主页</a>)。
+      <article style="text-align: left;font-weight: 300;font-size: 20px" v-html="about.content">
       </article>
     </div>
   </section>
 </template>
 
 <script>
+import config from 'config'
+
 export default {
   name: 'AboutMe',
   data () {
-    return {}
+    return {
+      loading: true,
+      about: {}
+    }
+  },
+  methods: {
+    getAboutMe () {
+      this.loading = true
+      this.getRequest(config.apiBaseUrl + '/api/about').then(resp => {
+        if (resp) {
+          this.about = resp.data
+          this.loading = false
+        }
+      })
+    }
   },
   created () {
+    this.getAboutMe()
   }
 }
 </script>

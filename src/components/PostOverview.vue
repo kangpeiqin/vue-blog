@@ -1,5 +1,5 @@
 <template>
-  <div class="content-wrapper">
+  <div class="content-wrapper" v-loading="loading">
 <!-- 回到顶部功能按钮   -->
     <el-backtop :visibility-height="80">
       <i class="el-icon-caret-top"></i>
@@ -121,19 +121,23 @@ export default {
       this.getData()
     },
     getData () {
+      this.loading = true
       this.getRequest(config.apiBaseUrl + '/api/post/all', {'pageNum': this.pageNum, 'pageSize': this.pageSize, postStatus: '1'}).then(resp => {
         if (resp) {
           console.log('data:', resp)
           this.post = resp.data.records
           this.total = resp.data.total
           this.tipShow = this.total === 0
+          this.loading = false
         }
       })
     },
     getRecommend () {
+      this.loading = true
       this.getRequest(config.apiBaseUrl + '/api/post/recommend').then(resp => {
         if (resp) {
           this.recommendList = resp.data
+          this.loading = false
         }
       })
     }

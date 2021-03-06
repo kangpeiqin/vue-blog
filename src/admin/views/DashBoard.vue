@@ -24,20 +24,19 @@
         </el-card>
       </el-col>
     </el-row>
-    <div>
-      <el-row :gutter="12" >
-        <el-col :span="24">
-          <el-card shadow="hover">
-              <div style="font-size: 20px">新动态</div>
-            <el-tabs v-model="activeName" @tab-click="handleClick">
-              <el-tab-pane label="最近文章" name="first">最近文章</el-tab-pane>
-              <el-tab-pane label="最近评论" name="second">最近评论</el-tab-pane>
-              <el-tab-pane label="操作记录" name="third">操作记录</el-tab-pane>
-            </el-tabs>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
+<!--    <div>-->
+<!--      <el-row :gutter="12" >-->
+<!--        <el-col :span="24">-->
+<!--          <el-card shadow="hover">-->
+<!--              <div style="font-size: 20px">新动态</div>-->
+<!--            <el-tabs v-model="activeName" @tab-click="handleClick">-->
+<!--              <el-tab-pane label="最近文章" name="first">最近文章</el-tab-pane>-->
+<!--              <el-tab-pane label="最近评论" name="second">最近评论</el-tab-pane>-->
+<!--            </el-tabs>-->
+<!--          </el-card>-->
+<!--        </el-col>-->
+<!--      </el-row>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -53,7 +52,7 @@ export default {
         commentCount: 16,
         visitCount: 200
       },
-      activeName: 'second'
+      activeName: 'first'
     }
   },
   methods: {

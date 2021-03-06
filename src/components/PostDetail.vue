@@ -1,5 +1,5 @@
 <template>
-  <section class="article">
+  <section class="article" v-loading="loading">
     <el-backtop :visibility-height="80">
       <i class="el-icon-caret-top"></i>
     </el-backtop>
@@ -32,20 +32,16 @@
       </p>
     </div>
     <div v-show="article.allowComment">
-      <el-form :inline="true" :model="dynamicValidateForm" ref="dynamicValidateForm" style="text-align: left;padding: 42px">
+      <el-form :inline="true" :model="dynamicValidateForm" :rules=rule ref="dynamicValidateForm" style="text-align: left;padding: 42px">
         <el-form-item
           prop="email"
           label="邮箱"
-          :rules="[
-      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-    ]"
         >
           <el-input v-model="dynamicValidateForm.email"></el-input>
         </el-form-item>
         <el-form-item
           label="用户名"
-          :rules="{required: true, message: '用户名不能为空', trigger: 'blur'}"
+          prop="userName"
         >
           <el-input v-model="dynamicValidateForm.userName"></el-input>
         </el-form-item>
@@ -75,6 +71,15 @@ export default {
         // authorId: 2,
         // label: '作者',
         commentList: []
+      },
+      rule: {
+        email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+        ],
+        userName: [
+          {required: true, message: '用户名不能为空', trigger: 'blur'}
+        ]
       },
       article: {},
       dynamicValidateForm: {
@@ -155,6 +160,7 @@ export default {
         if (resp.data.tags !== null || resp.data.tags !== '') {
           this.postTags = resp.data.tags.split(',')
         }
+        this.loading = false
       }
     })
     this.getCommentData()

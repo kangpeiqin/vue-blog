@@ -107,6 +107,8 @@ import config from 'config'
 import FooterToolBar from '@/admin/components/FooterToolbar'
 import ReactiveButton from '@/admin/components/ReactiveButton'
 import ATextarea from 'ant-design-vue/es/input/TextArea'
+import {Message} from 'element-ui'
+
 export default {
   components: {
     ATextarea,
@@ -199,6 +201,7 @@ export default {
         if (resp) {
           console.log(resp)
           if (resp.code === 200) {
+            Message.success({message: resp.msg})
             this.$router.push('/postView')
           }
         }
