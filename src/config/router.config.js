@@ -75,6 +75,24 @@ export const constantRouterMap = [
         component: () => import('@/admin/views/postView')
       },
       {
+        path: '/viewCategory',
+        name: 'categoryView',
+        meta: {requireAuth: true, keepAlive: false},
+        component: () => import('@/admin/views/categoryView')
+      },
+      {
+        path: '/viewAbout',
+        name: 'aboutView',
+        meta: {requireAuth: true, keepAlive: false},
+        component: () => import('@/admin/views/aboutView')
+      },
+      {
+        path: '/viewTag',
+        name: 'tagView',
+        meta: {requireAuth: true, keepAlive: false},
+        component: () => import('@/admin/views/tagView')
+      },
+      {
         path: '/dashBoard',
         name: 'dashBoard',
         meta: {requireAuth: true},
@@ -85,6 +103,12 @@ export const constantRouterMap = [
         name: 'postEditor',
         meta: {requireAuth: true},
         component: () => import('@/admin/views/postEditor')
+      },
+      {
+        path: '/editPost',
+        name: 'postEdit',
+        meta: {requireAuth: true},
+        component: () => import('@/admin/views/postEdit')
       }
     ]
   },

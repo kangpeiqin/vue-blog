@@ -18,15 +18,18 @@
           <i class="far fa-calendar">{{article.createTime}}</i>
         </p>
         <p class="comments"><i class="far fa-comments" style="margin-right: 30px">浏览次数：{{article.browseTimes}}</i> </p>
-        <p class="category" style="float: right"><i>分类：{{article.categoryName}}</i> </p>
-        <p>
-          <el-tag v-for="(item,index) in postTags" :key="index" style="margin-top: -30px;margin-right: 10px">{{item}}</el-tag>
-        </p>
+<!--        <p class="category" style="float: right"><i>分类：{{article.categoryName}}</i> </p>-->
+<!--        <p>-->
+<!--          <el-tag v-for="(item,index) in postTags" :key="index" style="margin-top: -30px;margin-right: 10px">{{item}}</el-tag>-->
+<!--        </p>-->
       </div>
 <!--      <h2 class="act-title">{{message}}</h2>-->
       <article class="post-content" v-html="article.formatContent">
 <!--        {{article.content}}-->
       </article>
+      <p>
+        <span v-for="(item,index) in postTags" :key="index" style="margin-top: -10px;margin-right:10px;float: right">{{item}}</span>
+      </p>
     </div>
     <div v-show="article.allowComment">
       <el-form :inline="true" :model="dynamicValidateForm" ref="dynamicValidateForm" style="text-align: left;padding: 42px">
@@ -71,53 +74,9 @@ export default {
         // placeholder: '在此输入评论',
         // authorId: 2,
         // label: '作者',
-        commentList: [{
-          id: 1,
-          commentUser: {
-            id: 1,
-            nickName: '评论者1',
-            avatar: 'http://127.0.0.1:8085/image/37d9cae7-16a7-4a94-99d3-bb3966ef8ec0.png'
-          },
-          targetUser: {
-            id: 1,
-            nickName: '评论者1'
-          },
-          content: '评论内容1'
-        },
-        {
-          id: 2,
-          commentUser: {
-            id: 2,
-            nickName: '评论者2'
-          },
-          content: '评论内容2',
-          createDate: '2021-02-15',
-          childrenList: [
-            {
-              id: 12,
-              commentUser: {
-                id: 21,
-                nickName: '评论者1'
-              },
-              targetUser: {
-                id: 1,
-                nickName: '评论者1'
-              },
-              content: '评论内容3'
-            }
-          ]
-        }
-        ]
+        commentList: []
       },
-      article: {
-        title: '梦境',
-        browseTimes: '22',
-        createTime: '2020-09-10',
-        coverImage: 'http://localhost:8080/static/img/background.1272215.jpg',
-        formatContent: 'This is a test',
-        originalContent: '',
-        allowComment: false
-      },
+      article: {},
       dynamicValidateForm: {
         userName: '',
         email: ''
@@ -189,7 +148,7 @@ export default {
     }
   },
   created () {
-    this.getRequest(config.apiBaseUrl + '/api/post/' + this.articleId, null).then(resp => {
+    this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: this.articleId}).then(resp => {
       if (resp) {
         console.log('article:', resp)
         this.article = resp.data
@@ -314,13 +273,13 @@ export default {
     text-align: left;
     /*background-color: lightgoldenrodyellow;*/
     /*border-radius: 22px;*/
-    padding: 30px;
+    padding: 1px;
     /*box-shadow: #3a8ee6*/
   }
 
   @media (max-width: 768px) {
     section{
-      padding: 0 40px;
+      padding: 0 2px;
     }
     .post-content{
       text-align: left;
@@ -328,6 +287,11 @@ export default {
       /*padding: 2px;*/
       box-shadow: #3a8ee6;
       -ms-overflow-x: scroll;
+    }
+    .post-content img {
+      max-width: 95%;
+      overflow: auto;
+      border: .15em solid #e0dfcc;
     }
   }
 </style>

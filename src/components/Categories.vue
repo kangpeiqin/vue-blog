@@ -34,19 +34,7 @@ export default {
       pageSize: 3,
       loading: true,
       total: 5,
-      article: {
-        title: '梦境',
-        browseTimes: '22',
-        createTime: '2020-09-10',
-        imgUrl: 'http://localhost:8080/static/img/background.1272215.jpg',
-        content: 'This is a test'
-      },
-      types: [
-        {
-          postNum: '5',
-          name: '随笔'
-        }
-      ]
+      types: []
     }
   },
   methods: {

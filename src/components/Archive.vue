@@ -40,31 +40,7 @@ export default {
       pageNum: 1,
       pageSize: 10,
       total: 4,
-      list: [{
-        year: '2020',
-        posts: [{
-          title: '通过审核',
-          createTime: '2018-04-13'
-        }, {
-          title: '创建成功',
-          createTime: '2018-04-11'
-        }, {
-          title: '创建成功',
-          createTime: '2018-04-11'
-        }, {
-          title: '创建成功',
-          createTime: '2018-04-11'
-        }]
-      }, {
-        year: '2018',
-        posts: [{
-          title: '通过审核',
-          createTime: '2018-04-13'
-        }, {
-          title: '创建成功',
-          createTime: '2018-04-11'
-        }]
-      }]
+      list: []
     }
   },
   methods: {

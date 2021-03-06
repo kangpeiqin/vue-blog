@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
+    editPostId: '',
     qryContent: '',
     articleId: '',
     searchShow: false,
@@ -21,7 +22,13 @@ export default new Vuex.Store({
     },
     setCategory (state, category) {
       state.category = category
+    },
+    setEditPostId (state, editPostId) {
+      state.editPostId = editPostId
     }
+  },
+  getters: {
+    getEditPostId: (state) => state.editPostId
   },
   actions: {
 

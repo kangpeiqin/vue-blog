@@ -78,6 +78,7 @@ export const deleteRequest = (url, params, headers) => {
     method: 'delete',
     url: `${base}${url}`,
     params: params,
+    data: params,
     headers: headers
   })
 }

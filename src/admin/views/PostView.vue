@@ -68,9 +68,15 @@
         >
         </el-table-column>
         <el-table-column
-          fixed="right"
-          label="操作"
-          width="100">
+          align="center"
+          width="200">
+          <template slot="header" slot-scope="scope">
+            <el-input
+              v-model="search"
+              size="mini"
+              placeholder="输入关键字搜索" style="width: 100px"/>
+            <el-button @click="query(search)" type="primary" size="small">搜索</el-button>
+          </template>
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
             <el-button @click="remove(scope.row)" type="text" size="small">删除</el-button>
@@ -94,15 +100,19 @@
 <script>
 import config from 'config'
 import ElSwitch from 'element-ui/packages/switch/src/component'
+import {mapState} from 'vuex'
+
 export default {
   name: 'PostView',
   components: {ElSwitch},
   methods: {
-    deleteConfirm (row) {
-      console.log('confirm', row)
-    },
     edit (row) {
-      console.log(row)
+      this.$store.commit('setEditPostId', row.id)
+      this.$router.push('/editPost')
+    },
+    query (content) {
+      console.log(content)
+      this.getPostList()
     },
     remove (row) {
       console.log(row)
@@ -154,7 +164,7 @@ export default {
       })
     },
     getPostList () {
-      this.getRequest(config.apiBaseUrl + '/api/post', {pageNum: this.pageNum, pageSize: this.pageSize}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/post/all', {pageNum: this.pageNum, pageSize: this.pageSize, keyWord: this.search}).then(resp => {
         if (resp) {
           console.log(resp)
           this.tableData = resp.data.records
@@ -168,6 +178,7 @@ export default {
       pageNum: 1,
       pageSize: 10,
       total: 100,
+      search: '',
       headers: {
         Authorization: sessionStorage.getItem('token')
       },
@@ -194,6 +205,7 @@ export default {
       }]
     }
   },
+  computed: mapState(['editPostId']),
   created () {
     this.getPostList()
   }

@@ -16,27 +16,27 @@
     </div>
     <div class="mb-4" style="margin-bottom: 20px">
       <a-textarea style="height: 80px"
-        v-model="postToStage.description"
-        placeholder="文章简介"
-        size="large"
+                  v-model="postToStage.description"
+                  placeholder="文章简介"
+                  size="large"
       />
     </div>
-<!--    <div style="margin-bottom: 20px;">-->
-<!--      <el-upload-->
-<!--        class="upload-demo"-->
-<!--        :limit = "limit"-->
-<!--        :action="actionsUrl"-->
-<!--        :on-preview="handlePreview"-->
-<!--        :on-remove="handleRemove"-->
-<!--        :file-list="fileList"-->
-<!--        :on-exceed = "onExceed"-->
-<!--        :on-success = "onSuccess"-->
-<!--        :headers = "headers"-->
-<!--        list-type="picture">-->
-<!--        <el-button size="small" type="primary">上传文章封面</el-button>-->
-<!--        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
-<!--      </el-upload>-->
-<!--    </div>-->
+    <!--    <div style="margin-bottom: 20px;">-->
+    <!--      <el-upload-->
+    <!--        class="upload-demo"-->
+    <!--        :limit = "limit"-->
+    <!--        :action="actionsUrl"-->
+    <!--        :on-preview="handlePreview"-->
+    <!--        :on-remove="handleRemove"-->
+    <!--        :file-list="fileList"-->
+    <!--        :on-exceed = "onExceed"-->
+    <!--        :on-success = "onSuccess"-->
+    <!--        :headers = "headers"-->
+    <!--        list-type="picture">-->
+    <!--        <el-button size="small" type="primary">上传文章封面</el-button>-->
+    <!--        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+    <!--      </el-upload>-->
+    <!--    </div>-->
     <div id="editor">
       <MarkdownEditor
         :originalContent="postToStage.originalContent"
@@ -82,16 +82,16 @@
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
-<!--        <reactive-button-->
-<!--          type="danger"-->
-<!--          @click="handleSaveDraft(false)"-->
-<!--          @callback="draftSavederrored = false"-->
-<!--          :loading="draftSaving"-->
-<!--          :errored="draftSavederrored"-->
-<!--          text="保存草稿"-->
-<!--          loadedText="保存成功"-->
-<!--          erroredText="保存失败"-->
-<!--        ></reactive-button>-->
+        <!--        <reactive-button-->
+        <!--          type="danger"-->
+        <!--          @click="handleSaveDraft(false)"-->
+        <!--          @callback="draftSavederrored = false"-->
+        <!--          :loading="draftSaving"-->
+        <!--          :errored="draftSavederrored"-->
+        <!--          text="保存草稿"-->
+        <!--          loadedText="保存成功"-->
+        <!--          erroredText="保存失败"-->
+        <!--        ></reactive-button>-->
         <a-button
           type="primary"
           @click="handleSaveDraft(false)"
@@ -107,7 +107,6 @@ import config from 'config'
 import FooterToolBar from '@/admin/components/FooterToolbar'
 import ReactiveButton from '@/admin/components/ReactiveButton'
 import ATextarea from 'ant-design-vue/es/input/TextArea'
-
 export default {
   components: {
     ATextarea,
@@ -115,7 +114,7 @@ export default {
     MarkdownEditor,
     FooterToolBar
   },
-  name: 'postEditorPage',
+  name: 'postEditPage',
   data () {
     return {
       limit: 1,
@@ -127,6 +126,7 @@ export default {
       }],
       tags: [],
       postToStage: {
+        id: '',
         title: '',
         originalContent: '',
         description: '',
@@ -170,6 +170,9 @@ export default {
   computed: {
     temporaryContent () {
       return this.postToStage.originalContent
+    },
+    editPostId () {
+      return this.$store.getters.getEditPostId
     }
   },
   methods: {
@@ -191,7 +194,8 @@ export default {
     },
     handleSaveDraft: function (draftOnly = false) {
       console.log(this.postToStage)
-      this.postRequest(config.apiBaseUrl + '/admin/post', this.postToStage, this.headers).then(resp => {
+      this.postToStage.id = this.editPostId
+      this.putRequest(config.apiBaseUrl + '/admin/post', this.postToStage, this.headers).then(resp => {
         if (resp) {
           console.log(resp)
           if (resp.code === 200) {
@@ -211,6 +215,11 @@ export default {
     this.getRequest(config.apiBaseUrl + '/api/tag/all').then(resp => {
       if (resp) {
         this.tags = resp.data
+      }
+    })
+    this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: this.editPostId}).then(resp => {
+      if (resp) {
+        this.postToStage = resp.data
       }
     })
   }

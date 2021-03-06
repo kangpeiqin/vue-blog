@@ -14,7 +14,7 @@
     <div class="article-content" v-show="!this.choice">
       <div class="meta">
         <ul v-for="(item, index) in recommendList" :key="index" style="margin-bottom: 15px">
-          <li style="list-style: none" @click="goToDetails(item)">
+          <li style="list-style: none" @click="showDetail(item.id)">
             <h1><span>{{item.createTime}} : </span> <a>{{item.title}}</a></h1>
           </li>
         </ul>
@@ -35,7 +35,7 @@
               <i class="far fa-calendar"></i>{{ article.createTime }}
             </p>
             <p class="comments">
-              <i class="far fa-comments"></i>阅读&nbsp;&nbsp;{{ article.browseTimes }}
+              <i class="far fa-comments"></i>分类:{{ article.categoryName }}
             </p>
           </div>
           <!-- 动态标题 -->
@@ -87,13 +87,6 @@ export default {
       tipShow: false,
       choice: true,
       recommendList: [
-        {
-          title: 'Java8',
-          coverImage: '',
-          createTime: '2020年09月10日',
-          browseTimes: '21',
-          description: '这是一篇关于Java8的学习文章，可以帮你理清Java8的新特性'
-        }
       ],
       post: [
         {
@@ -128,7 +121,7 @@ export default {
       this.getData()
     },
     getData () {
-      this.getRequest(config.apiBaseUrl + '/api/post', {'pageNum': this.pageNum, 'pageSize': this.pageSize, postStatus: '1'}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/post/all', {'pageNum': this.pageNum, 'pageSize': this.pageSize, postStatus: '1'}).then(resp => {
         if (resp) {
           console.log('data:', resp)
           this.post = resp.data.records
@@ -182,12 +175,12 @@ export default {
 
 @media (max-width: 768px) {
   .article-content {
-    padding: 0 40px;
+    padding: 0 2px;
   }
 }
 .article-content {
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
-  padding: 24px;
+  padding: 2px;
   transition: 0.4s;
   margin: 10px 20px 20px 20px;
   width: 90%;

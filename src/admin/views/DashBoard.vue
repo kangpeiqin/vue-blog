@@ -5,7 +5,7 @@
         <el-card shadow="hover">
           文章总数
           <div>
-            {{postCount}}
+            {{statistics.postCount}}
           </div>
         </el-card>
       </el-col>
@@ -13,14 +13,14 @@
         <el-card shadow="hover">
           评论总数
           <div>
-            {{commentCount}}
+            {{statistics.commentCount}}
           </div>
         </el-card>
       </el-col>
       <el-col :span="8">
         <el-card shadow="hover">
           阅读量
-          <div>{{visitCount}}</div>
+          <div>{{statistics.visitCount}}</div>
         </el-card>
       </el-col>
     </el-row>
@@ -42,13 +42,17 @@
 </template>
 
 <script>
+import config from 'config'
+
 export default {
   name: 'DashBoard',
   data () {
     return {
-      postCount: 15,
-      commentCount: 16,
-      visitCount: 200,
+      statistics: {
+        postCount: 15,
+        commentCount: 16,
+        visitCount: 200
+      },
       activeName: 'second'
     }
   },
@@ -56,6 +60,14 @@ export default {
     handleClick (tab, event) {
       console.log(tab, event)
     }
+  },
+  created () {
+    this.getRequest(config.apiBaseUrl + '/api/post/statistics').then(resp => {
+      if (resp) {
+        console.log(resp)
+        this.statistics = resp.data
+      }
+    })
   }
 }
 </script>

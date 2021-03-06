@@ -21,10 +21,12 @@
       </div>
       <!--      <h2 class="act-title">{{message}}</h2>-->
       <article style="text-align: left;font-weight: 300;font-size: 20px">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你好啊,我是KANGPEIQIN,一个爱运动、爱思考、爱动手、爱学习的90后理工男，我是一个正经的后端开发工程师，同时也是个业余的前端爱好者。
-        （就是大家常常说`码农`，其实我更喜欢别人称呼我们为工程师，就像别的领域的工程师一样）。良好的代码风格很重要，一直以来我也在努力让自己写的代码更加优雅。
-        我的个人兴趣爱好比较广泛，接触比较多的是计算机、三维设计、PS等，同时我也是一个摄影爱好者
-        (<a href="https://tuchong.com/16656346/" style="text-decoration: none;font-weight: 300;font-size: 20px">图虫主页</a>)。
+        &nbsp;&nbsp;<h1 style="text-align: center;font-size: 25px">Hello, I am KANG PEIQIN, a back-end development engineer based on Java.Welcome to my blog.</h1>
+        这是我基于Spring Boot + Vue开发的一款小型博客系统，作为一名好学开发者，平时有时候会去关注 Trending 趋势，
+        以获取最近 GitHub 上相关编程语言有哪些优秀项目和哪些开发者最火，所以自己写了个爬虫小程序定时抓取解析 GitHub Trending 数据并缓存，
+        集成到这个系统当中，以方便自己的查阅。自己是一个爱运动、爱思考、爱动手、爱学习的90后理工男，个人兴趣爱好比较广泛，接触比较多的是计算机，同时我也是一个摄影爱好，
+        喜欢用照片记录个人生活，放上照片的链接
+        (<a href="https://tuchong.com/16656346/" target="view_window" style="text-decoration: none;font-weight: 300;font-size: 20px">图虫主页</a>)。
       </article>
     </div>
   </section>
