@@ -32,6 +32,7 @@ export const routerMap = [
       {
         path: '/githubTrending',
         name: 'githubTrending',
+        meta: {keepAlive: false},
         component: () => import('@/pages/githubTrendingPage')
       },
       {

@@ -50,14 +50,34 @@
             <div class="text item">
               <div>作者：<img v-bind:src="item.avatar" style="width: 16px;height: 16px;margin-right: 5px;margin-bottom: -2px"/>
                 {{item.author}} &nbsp;
-                <a v-bind:href="item.accountLink" target="view_window">账号</a> &nbsp;
-                最火仓库：<a v-bind:href="item.popularRepoUrl" target="view_window">{{item.popularRepoName}}</a> &nbsp;
-                <p>描述：{{item.popularRepoDescription}}</p>
+                <a v-bind:href="item.accountLink" target="view_window">账号链接</a> &nbsp;
+                <span v-if="item.popularRepoName">最火仓库：<a v-bind:href="item.popularRepoUrl" target="view_window">{{item.popularRepoName}}</a></span> &nbsp;
+                <p v-if="item.popularRepoDescription">描述：{{item.popularRepoDescription}}</p>
               </div>
             </div>
           </el-card>
         </div>
       </div>
+      <el-pagination v-show="trendingShow"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageNum"
+        :page-sizes="[6,12,18]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
+      <el-pagination v-show="developerShow"
+                     @size-change="handleSizeChangeDev"
+                     @current-change="handleCurrentChangeDev"
+                     :current-page="pageNumDev"
+                     :page-sizes="[6,12,18]"
+                     :page-size="pageSizeDev"
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="totalDev"
+      >
+      </el-pagination>
     </div>
   </section>
 </template>
@@ -68,12 +88,17 @@ export default {
   name: 'githubTrendingPage',
   data () {
     return {
+      pageNumDev: 1,
+      pageSizeDev: 6,
+      totalDev: 5,
       currentLang: '',
       currentTime: 'daily',
       language: 'Any',
       since: 'Today',
       loading: true,
       activeName: 'first',
+      pageNum: 1,
+      pageSize: 6,
       total: 4,
       trendingShow: true,
       developerShow: false,
@@ -124,6 +149,24 @@ export default {
     }
   },
   methods: {
+    handleSizeChange (pageSize) {
+      console.log(`每页 ${pageSize} 条`)
+      this.pageSize = pageSize
+      this.getData()
+    },
+    handleCurrentChange (pageNum) {
+      console.log(`当前页: ${pageNum}`)
+      this.pageNum = pageNum
+      this.getData()
+    },
+    handleSizeChangeDev (pageSize) {
+      this.pageSizeDev = pageSize
+      this.getDeveloperList()
+    },
+    handleCurrentChangeDev (pageNum) {
+      this.pageNumDev = pageNum
+      this.getDeveloperList()
+    },
     handleClick (tab, event) {
       console.log(tab.index)
       if (tab.index === '0') {
@@ -148,19 +191,22 @@ export default {
     },
     getData: function () {
       this.loading = true
-      this.getRequest(config.apiBaseUrl + '/api/trending/' + this.currentLang, {since: this.currentTime}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/trending/' + this.currentLang,
+        {since: this.currentTime, pageNum: this.pageNum, pageSize: this.pageSize}).then(resp => {
         if (resp) {
           console.log('trending:', resp)
-          this.trendingData = resp.data
+          this.trendingData = resp.data.records
+          this.total = resp.data.total
           this.loading = false
         }
       })
     },
     getDeveloperList: function () {
       this.loading = true
-      this.getRequest(config.apiBaseUrl + '/api/trending/developer', null).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/trending/developer', {pageNum: this.pageNumDev, pageSize: this.pageSizeDev}).then(resp => {
         if (resp) {
-          this.developerList = resp.data
+          this.developerList = resp.data.records
+          this.totalDev = resp.data.total
           this.loading = false
         }
       })
