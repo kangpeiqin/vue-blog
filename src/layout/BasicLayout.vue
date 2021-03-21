@@ -2,7 +2,7 @@
     <div>
       <common-header></common-header>
       <route-view />
-      <common-footer></common-footer>
+<!--      <common-footer></common-footer>-->
     </div>
 </template>
 

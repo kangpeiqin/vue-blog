@@ -28,7 +28,7 @@
           <el-tab-pane label="Developer" name="second"></el-tab-pane>
         </el-tabs>
         <div class="trending" v-show="trendingShow">
-          <el-card class="box-card" v-for="(item, index) in trendingData" :key="index" style="margin-top: 20px">
+          <el-card class="box-card" v-for="(item, index) in trendingData" :key="index" style="margin-top: 20px;font-size: 18px">
             <div class="text item">
               <div>项目： <a v-bind:href="item.url" target="view_window">{{item.title}}</a> &nbsp; 作者：{{item.author}} &nbsp; 语言：{{item.programmingLanguage}}
                 &nbsp; stars：{{item.stars}} &nbsp; forks：{{item.forks}} &nbsp;
@@ -46,7 +46,7 @@
           </el-card>
         </div>
         <div class="trending" v-show="developerShow">
-          <el-card class="box-card" v-for="(item, index) in developerList" :key="index" style="margin-top: 20px">
+          <el-card class="box-card" v-for="(item, index) in developerList" :key="index" style="margin-top: 20px;font-size: 18px">
             <div class="text item">
               <div>作者：<img v-bind:src="item.avatar" style="width: 16px;height: 16px;margin-right: 5px;margin-bottom: -2px"/>
                 {{item.author}} &nbsp;

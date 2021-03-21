@@ -205,6 +205,7 @@ img {
 }
 .block{
   margin-top: 75px;
+  margin-bottom: 60px;
   height: 100%;
 }
 /* 定义变量 */

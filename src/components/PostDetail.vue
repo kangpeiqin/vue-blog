@@ -14,10 +14,10 @@
         <img :src="article.coverImage" alt=""/>
       </div>
       <div class="meta">
-        <p class="date-published" style="margin-right: 25px">
+        <p class="date-published" style="margin-right: 25px;color: black">
           <i class="far fa-calendar">{{article.createTime}}</i>
         </p>
-        <p class="comments"><i class="far fa-comments" style="margin-right: 30px">浏览次数：{{article.browseTimes}}</i> </p>
+        <p class="comments"><i class="far fa-comments" style="margin-right: 30px;color: black">浏览次数：{{article.browseTimes}}</i> </p>
 <!--        <p class="category" style="float: right"><i>分类：{{article.categoryName}}</i> </p>-->
 <!--        <p>-->
 <!--          <el-tag v-for="(item,index) in postTags" :key="index" style="margin-top: -30px;margin-right: 10px">{{item}}</el-tag>-->
@@ -27,9 +27,13 @@
       <article class="post-content" v-html="article.formatContent">
 <!--        {{article.content}}-->
       </article>
-      <p>
+      <p style="margin-bottom: 30px">
         <span v-for="(item,index) in postTags" :key="index" style="margin-top: -10px;margin-right:10px;float: right">{{item}}</span>
       </p>
+        <p style="margin-bottom: 20px;font-size: 1.4em;">
+          <span style="float: left" v-if="article.last"> 上一篇：<a @click="lastPost()">{{article.last.title}}</a></span>
+          <span style="float: right" v-if="article.next"> 下一篇: <a @click.prevent="nextPost()">{{article.next.title}}</a></span>
+        </p>
     </div>
     <div v-show="article.allowComment">
       <el-form :inline="true" :model="dynamicValidateForm" :rules=rule ref="dynamicValidateForm" style="text-align: left;padding: 42px">
@@ -89,9 +93,19 @@ export default {
     }
   },
   computed: mapState({
-    articleId: state => state.articleId
+    articleId: state => state.articleId,
+    last: state => state.last,
+    next: state => state.next
   }),
   methods: {
+    lastPost () {
+      this.$store.commit('setArticleId', this.article.last.id)
+      this.getData()
+    },
+    nextPost () {
+      this.$store.commit('setArticleId', this.article.next.id)
+      this.getData()
+    },
     doSend: function () {
       this.$refs['dynamicValidateForm'].validate((valid) => {
         if (valid) {
@@ -150,20 +164,23 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    getData () {
+      this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: this.articleId}).then(resp => {
+        if (resp) {
+          console.log('article:', resp)
+          this.article = resp.data
+          if (resp.data.tags !== null || resp.data.tags !== '') {
+            this.postTags = resp.data.tags.split(',')
+          }
+          this.loading = false
+        }
+      })
+      this.getCommentData()
     }
   },
   created () {
-    this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: this.articleId}).then(resp => {
-      if (resp) {
-        console.log('article:', resp)
-        this.article = resp.data
-        if (resp.data.tags !== null || resp.data.tags !== '') {
-          this.postTags = resp.data.tags.split(',')
-        }
-        this.loading = false
-      }
-    })
-    this.getCommentData()
+    this.getData()
     // const axios = require('axios')
     // var vm = this
     // axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
@@ -231,7 +248,7 @@ export default {
 
   .article-content{
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
-    padding: 24px;
+    padding: 24px 24px 70px 24px;
     transition: 0.4s;
     margin-top: 10px;
     margin-bottom: 40px;
@@ -253,7 +270,7 @@ export default {
   /* 动态元数据 */
   .article-content .meta {
     margin-top: 20px;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
     color: #c6c6c6;
     /*font-size: 12px;*/
     display: flex;
@@ -280,6 +297,7 @@ export default {
     /*background-color: lightgoldenrodyellow;*/
     /*border-radius: 22px;*/
     padding: 1px;
+    /*font-size: 1.6em;*/
     /*box-shadow: #3a8ee6*/
   }
 
