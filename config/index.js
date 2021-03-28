@@ -18,9 +18,12 @@ module.exports = {
           '^/api': ''
         }
       },
-      '/ws/*': {
-        target: 'ws://127.0.0.1:8083',
-        ws: true
+      '/ws': {
+        target: 'ws://127.0.0.1:8085',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ws': ''
+        }
       }
     },
 

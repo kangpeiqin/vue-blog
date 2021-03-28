@@ -28,4 +28,9 @@ export default {
     color: #2c3e50;
     overflow: hidden;
   }
+  /*.el-dialog{*/
+  /*  !*background: pink;*!*/
+  /*  background: url("./assets/images/chatbg.jpg")  fixed no-repeat center;*/
+  /*  background-size: cover;*/
+  /*}*/
 </style>

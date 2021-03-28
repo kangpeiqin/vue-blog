@@ -21,6 +21,32 @@
       </div>
     </div>
     <section id="company-activities" class="company-activities" v-show="this.choice">
+       <img src="../assets/images/chat.png" style="width: 20px;height: 20px;cursor: pointer" @click="openChatDialog" alt="nothing"/>
+      <el-dialog  class="chat-dialog"
+        title="发消息" :fullscreen="fullscreen"
+        :visible.sync="dialogVisible"
+        :before-close="handleClose">
+        <span style="float: left;margin-top: -30px">当前在线人数：{{online}}人</span>
+        <div style="height: 380px;overflow-y:scroll">
+          <div  v-for="(msg, idx) in messages" :key="idx">
+            <el-avatar :src="msg.avatar" style="float: left;margin-left: 10px"></el-avatar>
+            <span style="float: left;margin-top: 40px;margin-left: -50px;font-weight: 600">{{msg.name}}</span>
+            <el-card class="message" v-if="msg.id===chatUser.id" :body-style= "bodyStyle" >
+              <span>{{msg.content}}</span>
+            </el-card>
+            <el-card class="message" v-if="msg.id!==chatUser.id" :body-style= "chatStyle" >
+              <span>{{msg.content}}</span>
+            </el-card>
+          </div>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-input style="margin-bottom: 10px" class="ws-input"
+              placeholder="输入消息" @keyup.enter.native="sendMessage()"
+              v-model="chatContent">
+          </el-input>
+          <el-button type="primary" @click="sendMessage()" ref="btn" size="medium" style="font-size: 18px;margin-right: 5px">发送</el-button>
+        </span>
+      </el-dialog>
       <div class="activities">
         <!-- 动态 -->
         <div class="activity" v-for="(article, index) in post" :key="index">
@@ -70,6 +96,7 @@
 </template>
 
 <script>
+import {createSocket, sendWSPush} from '../utils/websocket'
 import config from 'config'
 import {mapState} from 'vuex'
 import notingToShow from '../exception/NothingToShow'
@@ -80,6 +107,16 @@ export default {
   },
   data () {
     return {
+      online: 0,
+      socketState: 0,
+      bodyStyle: {color: 'black', backgroundColor: '#13ce66', marginBottom: '10px', borderRadius: '10px'},
+      chatStyle: {color: 'black', backgroundColor: '#f7fcf9', marginBottom: '10px', borderRadius: '10px'},
+      chatUser: '',
+      screenWidth: document.body.clientWidth,
+      fullscreen: false,
+      chatContent: '',
+      messages: [],
+      dialogVisible: false,
       total: 12,
       pageNum: 1,
       pageSize: 3,
@@ -100,6 +137,34 @@ export default {
     }
   },
   methods: {
+    sendMessage () {
+      let msg = JSON.stringify({id: this.chatUser.id, name: this.chatUser.name, avatar: this.chatUser.avatar, content: this.chatContent})
+      sendWSPush(msg)
+      // this.messages.push({id: this.chatUser.id, name: this.chatUser.name, content: this.chatContent})
+      this.chatContent = null
+    },
+    openChatDialog () {
+      this.dialogVisible = true
+      createSocket('ws://localhost:8085/api/ws')
+      // 接收消息
+      let that = this
+      const getSocketData = e => {
+        const data = e && e.detail.data
+        let obj = JSON.parse(data)
+        console.log(obj)
+        if (that.socketState === 0) {
+          that.chatUser = obj.currentUser
+          that.online = obj.online
+          that.socketState = 1
+        } else {
+          that.messages.push(obj)
+        }
+      }
+      window.addEventListener('onmessageWS', getSocketData)
+    },
+    handleClose () {
+      this.dialogVisible = false
+    },
     makeChoice () {
 
     },
@@ -150,11 +215,21 @@ export default {
   watch: {
     qryContent: function () {
       this.getData()
+    },
+    screenWidth (val) {
+      this.screenWidth = val
     }
   },
   created () {
     this.getData()
     this.getRecommend()
+  },
+  mounted () {
+    if (this.screenWidth <= 768) {
+      this.fullscreen = true
+    } else {
+      this.fullscreen = false
+    }
   }
 }
 </script>
@@ -181,6 +256,9 @@ export default {
   .article-content {
     padding: 0 2px;
   }
+}
+.ws-input{
+
 }
 .article-content {
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
@@ -374,5 +452,6 @@ section {
     grid-template-columns: 1fr;
     row-gap: 36px;
   }
+
 }
 </style>
