@@ -107,6 +107,7 @@ export default {
   },
   data () {
     return {
+      connectState: false,
       online: 0,
       socketState: 0,
       bodyStyle: {color: 'black', backgroundColor: '#13ce66', marginBottom: '10px', borderRadius: '10px'},
@@ -140,27 +141,30 @@ export default {
     sendMessage () {
       let msg = JSON.stringify({id: this.chatUser.id, name: this.chatUser.name, avatar: this.chatUser.avatar, content: this.chatContent})
       sendWSPush(msg)
-      // this.messages.push({id: this.chatUser.id, name: this.chatUser.name, content: this.chatContent})
       this.chatContent = null
     },
     openChatDialog () {
       this.dialogVisible = true
-      createSocket('ws://localhost:8085/api/ws')
-      // 接收消息
-      let that = this
-      const getSocketData = e => {
-        const data = e && e.detail.data
-        let obj = JSON.parse(data)
-        console.log(obj)
-        if (that.socketState === 0) {
-          that.chatUser = obj.currentUser
-          that.online = obj.online
-          that.socketState = 1
-        } else {
-          that.messages.push(obj)
+      if (!this.connectState) {
+        // createSocket('ws://localhost:8085/api/ws')
+        createSocket('ws://47.119.115.186:8085/api/ws')
+        // 接收消息
+        let that = this
+        const getSocketData = e => {
+          const data = e && e.detail.data
+          let obj = JSON.parse(data)
+          console.log(obj)
+          if (that.socketState === 0) {
+            that.chatUser = obj.currentUser
+            that.online = obj.online
+            that.socketState = 1
+          } else {
+            that.messages.push(obj)
+          }
         }
+        window.addEventListener('onmessageWS', getSocketData)
+        this.connectState = true
       }
-      window.addEventListener('onmessageWS', getSocketData)
     },
     handleClose () {
       this.dialogVisible = false

@@ -54,25 +54,27 @@ const onmessageWS = e => {
 //   }, 1000)
 // }
 
-// /**
-//  * 发送数据
-//  * @param {any} message 需要发送的数据
-//  */
+/**
+ * 发送数据
+ * @param {any} message 需要发送的数据
+ */
 export const sendWSPush = message => {
   if (webSocket !== null) {
     webSocket.send(message)
   }
 }
 
-// // /** 断开重连 */
-// const oncloseWS = () => {
-//   clearInterval(setIntervalWesocketPush)
-//   console.log('websocket已断开....正在尝试重连')
-//   if (Socket.readyState !== 2) {
-//     Socket = null
-//     createSocket()
-//   }
-// }
+/** 断开连接 **/
+export const closeWS = () => {
+  console.log('websocket断开连接..')
+  if (webSocket !== null) {
+    webSocket.onclose = () => {
+      webSocket.close()
+      console.log('websocket断开连接')
+      webSocket = null
+    }
+  }
+}
 
 // export const sendPing = (time = 5000, ping = 'ping') => {
 //   clearInterval(setIntervalWesocketPush)
