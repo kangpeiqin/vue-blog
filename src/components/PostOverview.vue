@@ -21,32 +21,32 @@
       </div>
     </div>
     <section id="company-activities" class="company-activities" v-show="this.choice">
-       <img src="../assets/images/chat.png" style="width: 20px;height: 20px;cursor: pointer" @click="openChatDialog" alt="nothing"/>
-      <el-dialog  class="chat-dialog"
-        title="发消息" :fullscreen="fullscreen"
-        :visible.sync="dialogVisible"
-        :before-close="handleClose">
-        <span style="float: left;margin-top: -30px">当前在线人数：{{online}}人</span>
-        <div style="height: 380px;overflow-y:scroll">
-          <div  v-for="(msg, idx) in messages" :key="idx">
-            <el-avatar :src="msg.avatar" style="float: left;margin-left: 10px"></el-avatar>
-            <span style="float: left;margin-top: 40px;margin-left: -50px;font-weight: 600">{{msg.name}}</span>
-            <el-card class="message" v-if="msg.id===chatUser.id" :body-style= "bodyStyle" >
-              <span>{{msg.content}}</span>
-            </el-card>
-            <el-card class="message" v-if="msg.id!==chatUser.id" :body-style= "chatStyle" >
-              <span>{{msg.content}}</span>
-            </el-card>
-          </div>
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-input style="margin-bottom: 10px" class="ws-input"
-              placeholder="输入消息" @keyup.enter.native="sendMessage()"
-              v-model="chatContent">
-          </el-input>
-          <el-button type="primary" @click="sendMessage()" ref="btn" size="medium" style="font-size: 18px;margin-right: 5px">发送</el-button>
-        </span>
-      </el-dialog>
+<!--       <img src="../assets/images/chat.png" style="width: 20px;height: 20px;cursor: pointer" @click="openChatDialog" alt="nothing"/>-->
+<!--      <el-dialog  class="chat-dialog"-->
+<!--        title="发消息" :fullscreen="fullscreen"-->
+<!--        :visible.sync="dialogVisible"-->
+<!--        :before-close="handleClose">-->
+<!--        <span style="float: left;margin-top: -30px">当前在线人数：{{online}}人</span>-->
+<!--        <div style="height: 380px;overflow-y:scroll">-->
+<!--          <div  v-for="(msg, idx) in messages" :key="idx">-->
+<!--            <el-avatar :src="msg.avatar" style="float: left;margin-left: 10px"></el-avatar>-->
+<!--            <span style="float: left;margin-top: 40px;margin-left: -50px;font-weight: 600">{{msg.name}}</span>-->
+<!--            <el-card class="message" v-if="msg.id===chatUser.id" :body-style= "bodyStyle" >-->
+<!--              <span>{{msg.content}}</span>-->
+<!--            </el-card>-->
+<!--            <el-card class="message" v-if="msg.id!==chatUser.id" :body-style= "chatStyle" >-->
+<!--              <span>{{msg.content}}</span>-->
+<!--            </el-card>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <span slot="footer" class="dialog-footer">-->
+<!--          <el-input style="margin-bottom: 10px" class="ws-input"-->
+<!--              placeholder="输入消息" @keyup.enter.native="sendMessage()"-->
+<!--              v-model="chatContent">-->
+<!--          </el-input>-->
+<!--          <el-button type="primary" @click="sendMessage()" ref="btn" size="medium" style="font-size: 18px;margin-right: 5px">发送</el-button>-->
+<!--        </span>-->
+<!--      </el-dialog>-->
       <div class="activities">
         <!-- 动态 -->
         <div class="activity" v-for="(article, index) in post" :key="index">
@@ -85,7 +85,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[3,6,9,12]"
+        :page-sizes="[6,9,12,15]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -120,7 +120,7 @@ export default {
       dialogVisible: false,
       total: 12,
       pageNum: 1,
-      pageSize: 3,
+      pageSize: 6,
       loading: true,
       tipShow: false,
       choice: true,

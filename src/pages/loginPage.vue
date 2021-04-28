@@ -10,7 +10,7 @@
       <el-form-item prop="username">
         <el-input type="text"
                   v-model="ruleForm2.username"
-                  auto-complete="off"
+                  auto-complete="true"
                   placeholder="用户名"
         ></el-input>
       </el-form-item>
@@ -21,10 +21,6 @@
                   placeholder="密码"
         ></el-input>
       </el-form-item>
-      <el-checkbox
-        v-model="checked"
-        class="rememberme"
-      >记住密码</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button type="primary" style="width:100%;" @click.prevent="handleSubmit" :loading="logining">登录</el-button>
       </el-form-item>

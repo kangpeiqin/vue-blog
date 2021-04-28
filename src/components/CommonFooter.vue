@@ -4,7 +4,7 @@
     <div class="footer-menus">
       <!-- 版权信息 -->
       <p class="rights">
-        &copy; 2020 KANGPEIQIN - 小巧的博客系统
+        &copy; 2019 - 2021 PEIQIN BLOG -  <a href="http://www.miibeian.gov.cn/" target="_blank">闽ICP备2021005609号-1</a>
       </p>
     </div>
   </footer>
@@ -22,12 +22,15 @@ export default {
 
 <style scoped>
   footer {
-    margin-top: 50px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /*margin-top: 50px;*/
     background-color: #181818;
     display: grid;
     justify-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    /*padding-top: 5px;*/
+    /*padding-bottom: 5px;*/
   }
 
   /* 底部菜单 */
