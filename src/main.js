@@ -6,14 +6,17 @@ import App from './App'
 import router from './router'
 // import axios from 'axios'
 import store from './store/'
-import ElementUI from 'element-ui'
+// import ElementUI from 'element-ui'
 import './assets/css/common.css'
 import 'element-ui/lib/theme-chalk/index.css'
 // import upperFirst from 'lodash/upperFirst'
 // import camelCase from 'lodash/camelCase'
 import '@/admin/ant_design_components'
+import '@/admin/element_ui_components'
 import 'ant-design-vue/dist/antd.css'
 import {postRequest, postKeyValueRequest, putRequest, deleteRequest, getRequest} from './utils/http'
+
+// const Vue = require('vue')
 
 Vue.prototype.postRequest = postRequest
 Vue.prototype.postKeyValueRequest = postKeyValueRequest
@@ -53,7 +56,7 @@ Vue.prototype.getRequest = getRequest
 //   )
 // })
 Vue.config.productionTip = false
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
 
 // Vue.prototype.$http = axios
 

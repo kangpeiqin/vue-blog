@@ -126,7 +126,7 @@ export default {
     padding: 24px;
     transition: 0.4s;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 100px;
   }
   /* 动态图片 */
   .act-image-wrapper img {
