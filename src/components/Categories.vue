@@ -60,8 +60,9 @@ export default {
       this.getAll()
     },
     goToDetails: function (param) {
+      sessionStorage.setItem('cateId', param.id)
+      sessionStorage.setItem('cateName', param.name)
       this.$router.push({path: '/categories/details'})
-      this.$store.commit('setCategory', {id: param.id, name: param.name})
     }
   },
   computed: mapState({

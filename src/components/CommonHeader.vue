@@ -100,7 +100,7 @@ export default {
     document.addEventListener('scroll', this.onScroll)
   },
   created () {
-    this.goToIndex()
+    // this.goToIndex()
   }
 }
 </script>

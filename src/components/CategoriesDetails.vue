@@ -3,7 +3,7 @@
 <!--    <el-breadcrumb separator="/">-->
 <!--      <el-breadcrumb-item :to="{ path: '/categories' }">返回</el-breadcrumb-item>-->
 <!--    </el-breadcrumb>-->
-    <h1 class="title">{{this.category.name}}<span style="font-size: 5px">(分类)</span></h1>
+    <h1 class="title">{{this.categoryName}}<span style="font-size: 5px">(分类)</span></h1>
     <div class="article-content" v-loading="loading">
       <div class="meta">
         <ul v-for="(post, index) in postList" :key="index" style="margin-bottom: 15px">
@@ -26,7 +26,6 @@
 
 <script>
 import config from 'config'
-import {mapState} from 'vuex'
 
 export default {
   name: 'ClassificationDetails',
@@ -36,13 +35,13 @@ export default {
       pageSize: 3,
       loading: true,
       total: 5,
-      categoryName: '',
+      categoryName: sessionStorage.getItem('cateName'),
       postList: []
     }
   },
   methods: {
     getData: function () {
-      this.getRequest(config.apiBaseUrl + '/api/category/' + this.category.id, {pageNum: this.pageNum}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/category/' + sessionStorage.getItem('cateId'), {pageNum: this.pageNum}).then(resp => {
         if (resp) {
           console.log('classification:', resp)
           this.postList = resp.data.records
@@ -63,14 +62,11 @@ export default {
       this.getData()
     },
     goToDetails: function (param) {
-      this.$store.commit('setArticleId', param.id)
+      sessionStorage.setItem('articleId', param.id)
       this.$store.commit('setSearchShow', false)
       this.$router.push({path: '/article'})
     }
   },
-  computed: mapState({
-    category: state => state.category
-  }),
   created () {
     this.getData()
   }

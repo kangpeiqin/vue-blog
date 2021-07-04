@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+
 import config from 'config'
 import comment from 'hbl-comment'
 import {Message} from 'element-ui'
@@ -92,18 +92,15 @@ export default {
       }
     }
   },
-  computed: mapState({
-    articleId: state => state.articleId,
-    last: state => state.last,
-    next: state => state.next
-  }),
   methods: {
     lastPost () {
-      this.$store.commit('setArticleId', this.article.last.id)
+      // this.$store.commit('setArticleId', this.article.last.id)
+      sessionStorage.setItem('articleId', this.article.last.id)
       this.getData()
     },
     nextPost () {
-      this.$store.commit('setArticleId', this.article.next.id)
+      sessionStorage.setItem('articleId', this.article.next.id)
+      // this.$store.commit('setArticleId', this.article.next.id)
       this.getData()
     },
     doSend: function () {
@@ -166,7 +163,7 @@ export default {
       this.$refs[formName].resetFields()
     },
     getData () {
-      this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: this.articleId}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: sessionStorage.getItem('articleId')}).then(resp => {
         if (resp) {
           console.log('article:', resp)
           this.article = resp.data

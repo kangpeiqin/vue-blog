@@ -174,6 +174,7 @@ export default {
     },
     showDetail: function (blogId) {
       this.$store.commit('setArticleId', blogId)
+      sessionStorage.setItem('articleId', blogId)
       this.$store.commit('setSearchShow', false)
       this.$router.push({
         path: '/article'
