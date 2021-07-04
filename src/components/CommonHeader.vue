@@ -1,5 +1,5 @@
 <template>
-  <nav class="sticky">
+  <nav class="sticky" ref="header">
     <div class="logo">KANG'S BLOG</div>
     <ul class="nav-menu">
 <!--      <li id="my-input" v-show="searchShow"><search-input></search-input></li>-->
@@ -67,6 +67,18 @@ export default {
     changeState: function (show) {
       this.$store.commit('setSearchShow', show)
     },
+    onScroll () {
+      const scrollTop =
+        document.documentElement.scrollTop + document.body.scrollTop
+      const headerDom = this.$refs.header
+      if (scrollTop >= 160) {
+        if (!headerDom.getAttribute('class').includes('not-top')) {
+          headerDom.className = 'sticky header-hide' // 添加类名 css里设置动画
+        }
+      } else {
+        headerDom.className = 'sticky'
+      }
+    },
     showIndex: function () {
       const burger = document.querySelector('.burger')
       const navMenu = document.querySelector('.nav-menu')
@@ -83,6 +95,9 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+    document.addEventListener('scroll', this.onScroll)
   },
   created () {
     this.goToIndex()
@@ -120,7 +135,9 @@ export default {
     background-color: white;
     box-shadow: 0 0 18px rgba(0, 0, 0, 0.2);
   }
-
+  .header-hide{
+    transform: translate3d(0, -74px, 0);
+  }
   .logo {
     font-size: 24px;
     font-weight: 600;
