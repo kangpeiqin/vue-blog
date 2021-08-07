@@ -25,6 +25,7 @@ import {
   Select,
   Option,
   Dialog,
+  Popover,
   Tabs
 } from 'element-ui'
 // const Vue = require('vue')
@@ -54,3 +55,4 @@ Vue.use(Tabs)
 Vue.use(Card)
 Vue.use(TabPane)
 Vue.use(Dropdown)
+Vue.use(Popover)

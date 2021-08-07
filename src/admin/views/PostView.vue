@@ -79,7 +79,15 @@
           </template>
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-            <el-button @click="remove(scope.row)" type="text" size="small">删除</el-button>
+<!--            <el-button @click="remove(scope.row)" type="text" size="small">删除</el-button>-->
+            <el-popover placement="top" width="160">
+              <p>确定删除吗？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text">取消</el-button>
+                <el-button type="primary" size="mini" @click="remove(scope.row)">确定</el-button>
+              </div>
+              <el-button slot="reference">删除</el-button>
+            </el-popover>
           </template>
         </el-table-column>
       </el-table>
@@ -101,7 +109,7 @@
 import config from 'config'
 import ElSwitch from 'element-ui/packages/switch/src/component'
 import {mapState} from 'vuex'
-
+import {Message} from 'element-ui'
 export default {
   name: 'PostView',
   components: {ElSwitch},
@@ -115,17 +123,18 @@ export default {
       this.getPostList()
     },
     remove (row) {
+      this.visible = false
       console.log(row)
       this.deleteRequest(config.apiBaseUrl + '/admin/post', {id: row.id}, this.headers).then(resp => {
         if (resp) {
           if (resp.code === 200) {
-            this.$message({
+            Message.success({
               message: '删除成功',
               type: 'success'
             })
             this.getPostList()
           } else {
-            this.$message({
+            Message.error({
               message: resp.msg,
               type: 'warning'
             })
