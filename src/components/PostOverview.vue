@@ -450,7 +450,7 @@ section {
   /* 区域的左右内边距设置为40象素 */
   section,
   .footer-menus {
-    padding: 0 40px;
+    padding: 0 10px;
   }
   /* 公司动态设置为1列 */
   .activities {

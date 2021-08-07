@@ -150,7 +150,7 @@ export default {
 
   @media (max-width: 768px) {
     section {
-      padding: 0 40px;
+      padding: 0 10px;
     }
   }
 </style>
