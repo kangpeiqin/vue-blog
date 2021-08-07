@@ -1,5 +1,9 @@
 <template>
-  <div class="login-container container ">
+  <div class="login-container">
+    <div class="clock-container">
+      <div class="time"></div>
+      <div class="date"></div>
+    </div>
     <el-form :model="ruleForm2" :rules="rules2"
              status-icon
              ref="ruleForm2"
@@ -48,7 +52,30 @@ export default {
       checked: false
     }
   },
+  mounted () {
+    this.clock()
+  },
   methods: {
+    clock () {
+      const timeEl = document.querySelector('.time')
+      const dateEl = document.querySelector('.date')
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      function setTime () {
+        const time = new Date()
+        const month = time.getMonth()
+        const day = time.getDay()
+        const date = time.getDate()
+        const hours = time.getHours()
+        const hoursForClock = hours >= 13 ? hours % 12 : hours
+        const minutes = time.getMinutes()
+        const ampm = hours >= 12 ? 'PM' : 'AM'
+        timeEl.innerHTML = `${hoursForClock}:${minutes < 10 ? `0${minutes}` : minutes} ${ampm}`
+        dateEl.innerHTML = `${days[day]}, ${months[month]} <span class="circle">${date}</span>`
+      }
+      setTime()
+      setInterval(setTime, 1000)
+    },
     handleSubmit (event) {
       this.$refs.ruleForm2.validate((valid) => {
         if (valid) {
@@ -93,6 +120,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
   .login-container {
     width: 100%;
     height: 100%;
@@ -100,15 +128,46 @@ export default {
   .login-page {
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    margin: 180px auto;
+    margin: 20px auto;
     width: 350px;
     padding: 35px 35px 15px;
     background: #fff;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
   }
-  label.el-checkbox.rememberme {
-    margin: 0px 0px 15px;
-    text-align: left;
+
+  @import url('https://fonts.googleapis.com/css?family=Heebo:300&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .clock-container {
+    margin-top: 115px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .time {
+    font-size: 60px;
+  }
+
+  .date {
+    color: #aaa;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
   }
 </style>

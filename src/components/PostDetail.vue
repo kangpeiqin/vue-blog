@@ -68,6 +68,7 @@ export default {
   data () {
     return {
       loading: true,
+      articleId: sessionStorage.getItem('articleId'),
       postTags: [],
       comment: {
         commentNum: 2,
@@ -96,11 +97,13 @@ export default {
     lastPost () {
       // this.$store.commit('setArticleId', this.article.last.id)
       sessionStorage.setItem('articleId', this.article.last.id)
+      this.articleId = sessionStorage.getItem('articleId')
       this.getData()
     },
     nextPost () {
       sessionStorage.setItem('articleId', this.article.next.id)
       // this.$store.commit('setArticleId', this.article.next.id)
+      this.articleId = sessionStorage.getItem('articleId')
       this.getData()
     },
     doSend: function () {
@@ -136,7 +139,7 @@ export default {
       this.submitComment(data)
     },
     getCommentData: function () {
-      this.getRequest(config.apiBaseUrl + '/api/comment/' + this.articleId, null).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/comment/' + sessionStorage.getItem('articleId'), null).then(resp => {
         if (resp) {
           console.log('comment', resp.data)
           this.comment = resp.data
@@ -163,7 +166,7 @@ export default {
       this.$refs[formName].resetFields()
     },
     getData () {
-      this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: sessionStorage.getItem('articleId')}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: this.articleId}).then(resp => {
         if (resp) {
           console.log('article:', resp)
           this.article = resp.data
@@ -177,22 +180,11 @@ export default {
     }
   },
   created () {
-    this.getData()
-    // const axios = require('axios')
-    // var vm = this
-    // axios.get(config.apiBaseUrl + '/api/post/' + this.$route.query.id)
-    //   .then(function (response) {
-    //     // handle success
-    //     console.log(response)
-    //     vm.article = response.data.data
-    //   })
-    //   .catch(function (error) {
-    //     // handle error
-    //     console.log(error)
-    //   })
-    //   .then(function () {
-    //     // always executed
-    //   })
+    if (!this.articleId) {
+      this.$router.push({path: '/index'})
+    } else {
+      this.getData()
+    }
   }
 }
 </script>

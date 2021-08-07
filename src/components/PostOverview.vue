@@ -173,7 +173,7 @@ export default {
 
     },
     showDetail: function (blogId) {
-      this.$store.commit('setArticleId', blogId)
+      // this.$store.commit('setArticleId', blogId)
       sessionStorage.setItem('articleId', blogId)
       this.$store.commit('setSearchShow', false)
       this.$router.push({
@@ -214,7 +214,7 @@ export default {
   },
   computed: mapState({
     qryContent: state => state.qryContent,
-    articleId: state => state.articleId,
+    // articleId: state => state.articleId,
     searchShow: state => state.searchShow
   }),
   watch: {

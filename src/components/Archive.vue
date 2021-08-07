@@ -55,7 +55,8 @@ export default {
       this.getData()
     },
     goToDetails: function (param) {
-      this.$store.commit('setArticleId', param.id)
+      // this.$store.commit('setArticleId', param.id)
+      sessionStorage.setItem('articleId', param.id)
       this.$store.commit('setSearchShow', false)
       this.$router.push({path: '/article'})
     },

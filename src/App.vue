@@ -13,8 +13,7 @@ export default {
 </script>
 
 <style>
-  html,
-  body {
+  html, body {
     margin: 0;
     font-family: "PingFang SC", "Microsoft Yahei",
     sans-serif;
@@ -28,6 +27,7 @@ export default {
     color: #2c3e50;
     overflow: hidden;
   }
+
   /*.el-dialog{*/
   /*  !*background: pink;*!*/
   /*  background: url("./assets/images/chatbg.jpg")  fixed no-repeat center;*/

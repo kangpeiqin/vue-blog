@@ -31,6 +31,7 @@ export default {
   name: 'ClassificationDetails',
   data () {
     return {
+      cateId: sessionStorage.getItem('cateId'),
       pageNum: 1,
       pageSize: 3,
       loading: true,
@@ -41,7 +42,7 @@ export default {
   },
   methods: {
     getData: function () {
-      this.getRequest(config.apiBaseUrl + '/api/category/' + sessionStorage.getItem('cateId'), {pageNum: this.pageNum}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/api/category/' + this.cateId, {pageNum: this.pageNum}).then(resp => {
         if (resp) {
           console.log('classification:', resp)
           this.postList = resp.data.records
@@ -68,7 +69,11 @@ export default {
     }
   },
   created () {
-    this.getData()
+    if (!this.cateId) {
+      this.$router.push({path: '/index'})
+    } else {
+      this.getData()
+    }
   }
 }
 </script>
