@@ -450,13 +450,15 @@ section {
   /* 区域的左右内边距设置为40象素 */
   section,
   .footer-menus {
-    padding: 0 10px;
+    padding: 0 25px;
   }
   /* 公司动态设置为1列 */
   .activities {
     grid-template-columns: 1fr;
-    row-gap: 36px;
+    row-gap: 6px;
   }
-
+  .block{
+    padding: 0 55px;
+  }
 }
 </style>

@@ -8,7 +8,7 @@
       <li v-on:click="goToLabel()">归档</li>
       <li v-on:click=goToAbout()>关于我</li>
       <li v-on:click="trending">GitHub Trending</li>
-      <li v-on:click="login()">登陆</li>
+      <li v-on:click="login()">登录</li>
       <github-pendant></github-pendant>
     </ul>
     <div class="burger" v-on:click=showIndex()>
