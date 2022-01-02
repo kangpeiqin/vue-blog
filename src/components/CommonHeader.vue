@@ -1,6 +1,6 @@
 <template>
   <nav class="sticky" ref="header">
-    <div class="logo">KANG'S BLOG</div>
+    <div class="logo">PEIQIN BLOG</div>
     <ul class="nav-menu">
       <li v-on:click=goToIndex()>首页</li>
       <li v-on:click="goToType()">分类</li>

@@ -4,7 +4,7 @@
     <div class="footer-menus">
       <!-- 版权信息 -->
       <p class="rights">
-        &copy; 2019 - 2021 PEIQIN BLOG -  <a href="http://www.miibeian.gov.cn/" target="_blank">闽ICP备2021005609号-1</a>
+        &copy; 2019 - 2022 PEIQIN BLOG -  <a href="http://www.miibeian.gov.cn/" target="_blank">闽ICP备2021005609号-1</a>
       </p>
     </div>
   </footer>
