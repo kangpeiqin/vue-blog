@@ -14,40 +14,14 @@
     <div class="article-content" v-show="!this.choice">
       <div class="meta">
         <ul v-for="(item, index) in recommendList" :key="index" style="margin-bottom: 15px">
-          <li style="list-style: none" @click="showDetail(item.id)">
+          <li style="list-style: none;color: black;cursor: pointer" @click="showDetail(item.id)">
             <h1><span>{{item.createTime}} : </span> <a>{{item.title}}</a></h1>
           </li>
         </ul>
       </div>
     </div>
-    <section id="company-activities" class="company-activities" v-show="this.choice">
-<!--       <img src="../assets/images/chat.png" style="width: 20px;height: 20px;cursor: pointer" @click="openChatDialog" alt="nothing"/>-->
-<!--      <el-dialog  class="chat-dialog"-->
-<!--        title="发消息" :fullscreen="fullscreen"-->
-<!--        :visible.sync="dialogVisible"-->
-<!--        :before-close="handleClose">-->
-<!--        <span style="float: left;margin-top: -30px">当前在线人数：{{online}}人</span>-->
-<!--        <div style="height: 380px;overflow-y:scroll">-->
-<!--          <div  v-for="(msg, idx) in messages" :key="idx">-->
-<!--            <el-avatar :src="msg.avatar" style="float: left;margin-left: 10px"></el-avatar>-->
-<!--            <span style="float: left;margin-top: 40px;margin-left: -50px;font-weight: 600">{{msg.name}}</span>-->
-<!--            <el-card class="message" v-if="msg.id===chatUser.id" :body-style= "bodyStyle" >-->
-<!--              <span>{{msg.content}}</span>-->
-<!--            </el-card>-->
-<!--            <el-card class="message" v-if="msg.id!==chatUser.id" :body-style= "chatStyle" >-->
-<!--              <span>{{msg.content}}</span>-->
-<!--            </el-card>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <span slot="footer" class="dialog-footer">-->
-<!--          <el-input style="margin-bottom: 10px" class="ws-input"-->
-<!--              placeholder="输入消息" @keyup.enter.native="sendMessage()"-->
-<!--              v-model="chatContent">-->
-<!--          </el-input>-->
-<!--          <el-button type="primary" @click="sendMessage()" ref="btn" size="medium" style="font-size: 18px;margin-right: 5px">发送</el-button>-->
-<!--        </span>-->
-<!--      </el-dialog>-->
-      <div class="activities">
+    <section id="articles" class="articles" v-show="this.choice">
+      <div class="article">
         <!-- 动态 -->
         <div class="activity" v-for="(article, index) in post" :key="index">
           <!-- 动态图片 -->
@@ -61,11 +35,11 @@
               <i class="far fa-calendar"></i>{{ article.createTime }}
             </p>
             <p class="comments">
-              <i class="far fa-comments"></i>分类:{{ article.categoryName }}
+              <i class="far fa-comments"></i>分类：{{ article.categoryName }}
             </p>
           </div>
           <!-- 动态标题 -->
-          <h2 class="act-title">{{ article.title }}</h2>
+          <h2 style="font-weight: normal;font-size: 18px;margin-bottom: 8px">{{ article.title }}</h2>
           <!-- 动态内容摘要 -->
           <article>
             {{ article.description }}
@@ -252,7 +226,6 @@ export default {
 }
 
 .article-content article {
-  /*color: #8b8b8b;*/
   letter-spacing: 0.54px;
   line-height: 24px;
 }
@@ -262,9 +235,7 @@ export default {
     padding: 0 2px;
   }
 }
-.ws-input{
 
-}
 .article-content {
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
   padding: 2px;
@@ -304,8 +275,6 @@ img {
   --backdrop-color: rgba(42, 42, 42, 0.69);
 }
 
-/* ============= 内容区域 ================== */
-
 /* 通用样式  */
 .content-wrapper {
   margin-top: 85px;
@@ -324,54 +293,12 @@ section {
   padding: 0 80px;
 }
 
-/* 区域大标题 */
-.title1 {
-  /* justify-self: center; */
-  /* position: relative; */
-  font-size: 34px;
-  color: #2e2e2e;
-}
-/* 大标题下方红线 */
-.title1::after {
-  content: "";
-  display: block;
-  width: 80%;
-  height: 4px;
-  transform: translateX(10%);
-  margin-top: 14px;
-  background-color: #ff434f;
-}
-
-/* 大d标题下方简介 */
-.intro {
-  margin: 28px 0 60px 0;
-  font-size: 18px;
-  color: var(--text-color-dark-gray);
-}
-
-/* 区域背景色，因为区域有最大宽度限制，用before来设置占满浏览器宽度 */
-.section-bg {
-  position: relative;
-}
-
-.section-bg::before {
-  content: "";
-  display: block;
-  position: absolute;
-  background-color: #f9fbfb;
-  width: 100vw;
-  height: 100%;
-  z-index: -1;
-}
-
-/* ============= 公司动态 ================== */
-/* 公司动态 */
-.company-activities {
+.articles {
   margin-top: 10px;
 }
 
 /* 动态栅格布局 */
-.activities {
+.article {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 24px;
@@ -447,13 +374,10 @@ section {
 
 /* 小于768象素时 */
 @media (max-width: 768px) {
-  /* 区域的左右内边距设置为40象素 */
-  section,
-  .footer-menus {
+  section{
     padding: 0 25px;
   }
-  /* 公司动态设置为1列 */
-  .activities {
+  .article {
     grid-template-columns: 1fr;
     row-gap: 6px;
   }

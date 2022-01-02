@@ -1,12 +1,4 @@
 <template>
-<!--  <div class="about-container">-->
-<!--    <el-container>-->
-<!--      <el-aside width="200px">Aside</el-aside>-->
-<!--      <el-container>-->
-<!--        <el-main>Main</el-main>-->
-<!--      </el-container>-->
-<!--    </el-container>-->
-<!--  </div>-->
   <section class="article" v-loading="loading">
     <h2 class="title">{{about.title}}</h2>
     <div class="article-content">
@@ -19,7 +11,6 @@
         </p>
         <p class="comments"><i class="far fa-comments"></i> </p>
       </div>
-      <!--      <h2 class="act-title">{{message}}</h2>-->
       <article style="text-align: left;font-weight: 300;font-size: 20px" v-html="about.content">
       </article>
     </div>
@@ -131,17 +122,9 @@ export default {
     font-size: 12px;
     display: flex;
   }
-
   .article-content .meta > p:last-child {
     margin-left: 36px;
   }
-
-  .act-title {
-    color: #494949;
-    font-size: 18px;
-    margin-bottom: 16px;
-  }
-
   .article-content article {
     /*color: #8b8b8b;*/
     letter-spacing: 0.54px;

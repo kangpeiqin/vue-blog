@@ -2,13 +2,11 @@
   <nav class="sticky" ref="header">
     <div class="logo">KANG'S BLOG</div>
     <ul class="nav-menu">
-<!--      <li id="my-input" v-show="searchShow"><search-input></search-input></li>-->
       <li v-on:click=goToIndex()>首页</li>
       <li v-on:click="goToType()">分类</li>
       <li v-on:click="goToLabel()">归档</li>
       <li v-on:click=goToAbout()>关于我</li>
       <li v-on:click="trending">GitHub Trending</li>
-      <li v-on:click="login()">登录</li>
       <github-pendant></github-pendant>
     </ul>
     <div class="burger" v-on:click=showIndex()>
@@ -59,10 +57,6 @@ export default {
     },
     trending: function () {
       this.$router.push({path: '/githubTrending'})
-    },
-    login: function () {
-      this.changeState(false)
-      this.$router.push({path: '/login'})
     },
     changeState: function (show) {
       this.$store.commit('setSearchShow', show)

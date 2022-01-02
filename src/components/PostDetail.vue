@@ -3,11 +3,6 @@
     <el-backtop :visibility-height="80">
       <i class="el-icon-caret-top"></i>
     </el-backtop>
-<!--    <el-breadcrumb separator="/">-->
-<!--      <el-breadcrumb-item :to="{ path: '/index' }">返回</el-breadcrumb-item>-->
-<!--      <el-breadcrumb-item><a href="/">上一篇</a></el-breadcrumb-item>-->
-<!--      <el-breadcrumb-item><a href="/">下一篇</a></el-breadcrumb-item>-->
-<!--    </el-breadcrumb>-->
     <h1 class="title">{{article.title}}</h1>
     <div class="article-content">
       <div class="act-image-wrapper">
@@ -18,14 +13,8 @@
           <i class="far fa-calendar">{{article.createTime}}</i>
         </p>
         <p class="comments"><i class="far fa-comments" style="margin-right: 30px;color: black">浏览次数：{{article.browseTimes}}</i> </p>
-<!--        <p class="category" style="float: right"><i>分类：{{article.categoryName}}</i> </p>-->
-<!--        <p>-->
-<!--          <el-tag v-for="(item,index) in postTags" :key="index" style="margin-top: -30px;margin-right: 10px">{{item}}</el-tag>-->
-<!--        </p>-->
       </div>
-<!--      <h2 class="act-title">{{message}}</h2>-->
       <article class="post-content" v-html="article.formatContent">
-<!--        {{article.content}}-->
       </article>
       <p style="margin-bottom: 30px">
         <span v-for="(item,index) in postTags" :key="index" style="margin-top: -10px;margin-right:10px;float: right">{{item}}</span>
