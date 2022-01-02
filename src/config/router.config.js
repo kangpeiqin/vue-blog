@@ -45,12 +45,6 @@ export const routerMap = [
         name: 'categoriesDetails',
         meta: {keepAlive: false},
         component: resolve => require(['@/pages/categoriesDetailsPage'], resolve)
-      },
-      {
-        path: '/login',
-        name: 'loginPage',
-        component: resolve => require(['@/pages/loginPage'], resolve),
-        meta: {title: '登录'}
       }
     ]
   }

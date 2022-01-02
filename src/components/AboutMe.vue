@@ -2,9 +2,6 @@
   <section class="article" v-loading="loading">
     <h2 class="title">{{about.title}}</h2>
     <div class="article-content">
-      <div class="act-image-wrapper">
-        <img src="../assets/images/background.jpg" alt=""/>
-      </div>
       <div class="meta">
         <p class="date-published">
           <i class="far fa-calendar"></i>

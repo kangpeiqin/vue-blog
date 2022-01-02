@@ -15,14 +15,6 @@ import {
   Timeline,
   TimelineItem,
   Button,
-  Menu,
-  MenuItem,
-  Submenu,
-  Row,
-  Col,
-  Table,
-  TableColumn,
-  Select,
   Option,
   Dialog,
   Popover,
@@ -31,14 +23,6 @@ import {
 // const Vue = require('vue')
 Vue.use(Dialog)
 Vue.use(Option)
-Vue.use(Select)
-Vue.use(TableColumn)
-Vue.use(Table)
-Vue.use(Col)
-Vue.use(Row)
-Vue.use(Submenu)
-Vue.use(MenuItem)
-Vue.use(Menu)
 Vue.use(Button)
 Vue.use(TimelineItem)
 Vue.use(Timeline)

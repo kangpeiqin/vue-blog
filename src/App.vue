@@ -28,9 +28,4 @@ export default {
     overflow: hidden;
   }
 
-  /*.el-dialog{*/
-  /*  !*background: pink;*!*/
-  /*  background: url("./assets/images/chatbg.jpg")  fixed no-repeat center;*/
-  /*  background-size: cover;*/
-  /*}*/
 </style>
