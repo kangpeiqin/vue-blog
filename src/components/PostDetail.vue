@@ -20,8 +20,8 @@
         <span v-for="(item,index) in postTags" :key="index" style="margin-top: -10px;margin-right:10px;float: right">{{item}}</span>
       </p>
         <p style="margin-bottom: 20px;font-size: 1.4em;">
-          <span style="float: left" v-if="article.last"> 上一篇：<a @click="lastPost()">{{article.last.title}}</a></span>
-          <span style="float: right" v-if="article.next"> 下一篇: <a @click.prevent="nextPost()">{{article.next.title}}</a></span>
+          <span style="float: left;cursor: pointer" v-if="article.last"> 上一篇：<a @click="lastPost()">{{article.last.title}}</a></span>
+          <span style="float: right;cursor: pointer" v-if="article.next"> 下一篇: <a @click.prevent="nextPost()">{{article.next.title}}</a></span>
         </p>
     </div>
     <div v-show="article.allowComment">
@@ -226,6 +226,7 @@ export default {
 
   .article-content{
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
+    background-color: lightgoldenrodyellow;
     padding: 24px 24px 70px 24px;
     transition: 0.4s;
     margin-top: 10px;
@@ -248,9 +249,8 @@ export default {
   /* 动态元数据 */
   .article-content .meta {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
     color: #c6c6c6;
-    /*font-size: 12px;*/
     display: flex;
   }
 
@@ -269,24 +269,31 @@ export default {
     letter-spacing: 0.54px;
     line-height: 24px;
   }
-
   .post-content{
     text-align: left;
-    /*background-color: lightgoldenrodyellow;*/
-    /*border-radius: 22px;*/
+    font-style: normal;
     padding: 1px;
-    /*font-size: 1.6em;*/
-    /*box-shadow: #3a8ee6*/
+    letter-spacing: -0.01em;
+    font-family: Georgia,serif;
   }
-
   @media (max-width: 768px) {
     section{
       padding: 0 2px;
     }
+    /* 动态元数据 */
+    .article-content .meta {
+      margin-top: -20px;
+      margin-bottom: 2px;
+      color: #c6c6c6;
+      /*font-size: 12px;*/
+      display: flex;
+    }
     .post-content{
       text-align: left;
-      /*background-color: lightgoldenrodyellow;*/
-      /*padding: 2px;*/
+      font-style: normal;
+      padding: 1px;
+      letter-spacing: -0.01em;
+      font-family: Georgia,serif;
       box-shadow: #3a8ee6;
       -ms-overflow-x: scroll;
     }
