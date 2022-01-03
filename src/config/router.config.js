@@ -11,44 +11,6 @@ export const routerMap = [
     children: [
       {
         path: '/index',
-        name: 'homePage',
-        component: resolve => require(['@/pages/homePage'], resolve)
-      },
-      {
-        path: '/categories',
-        name: 'categories',
-        component: resolve => require(['@/pages/typePage'], resolve)
-      },
-      {
-        path: '/archives',
-        name: 'archives',
-        component: resolve => require(['@/pages/tagPage'], resolve)
-      },
-      {
-        path: '/about',
-        name: 'about',
-        component: resolve => require(['@/pages/aboutPage'], resolve)
-      },
-      {
-        path: '/githubTrending',
-        name: 'githubTrending',
-        meta: {keepAlive: false},
-        component: resolve => require(['@/pages/githubTrendingPage'], resolve)
-      },
-      {
-        path: '/article',
-        name: 'article',
-        meta: {keepAlive: false},
-        component: resolve => require(['@/pages/postDetailPage'], resolve)
-      },
-      {
-        path: '/categories/details',
-        name: 'categoriesDetails',
-        meta: {keepAlive: false},
-        component: resolve => require(['@/pages/categoriesDetailsPage'], resolve)
-      },
-      {
-        path: '/login',
         name: 'loginPage',
         component: resolve => require(['@/pages/loginPage'], resolve),
         meta: {title: '登录'}
