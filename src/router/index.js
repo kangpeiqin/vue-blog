@@ -8,6 +8,7 @@ import {
 Vue.use(Router)
 
 export default new Router({
+  base: '/admin/',
   routes: routerMap.concat(constantRouterMap)
 })
 

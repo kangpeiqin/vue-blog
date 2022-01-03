@@ -7,10 +7,10 @@ export const routerMap = [
     name: 'BasicLayout',
     component: BasicLayout,
     meta: {title: '首页'},
-    redirect: '/index',
+    redirect: '/login',
     children: [
       {
-        path: '/index',
+        path: '/login',
         name: 'loginPage',
         component: resolve => require(['@/pages/loginPage'], resolve),
         meta: {title: '登录'}
