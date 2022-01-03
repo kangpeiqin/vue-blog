@@ -150,5 +150,14 @@ a {
   border-bottom: 1px solid #999;
   word-wrap: break-word;
 }
-
-
+blockquote {
+  padding: 0 15px;
+  color: #666;
+  border-left: 4px solid #ddd;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 40px;
+  margin-inline-end: 40px;
+  margin: 0;
+}
