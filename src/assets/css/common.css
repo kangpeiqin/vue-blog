@@ -161,3 +161,11 @@ blockquote {
   margin-inline-end: 40px;
   margin: 0;
 }
+p code {
+  padding: 2px 4px;
+  word-wrap: break-word;
+  color: #555;
+  background: #eee;
+  border-radius: 3px;
+  font-size: 14px;
+}

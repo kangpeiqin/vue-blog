@@ -6,7 +6,7 @@
       <li v-on:click="goToType()">分类</li>
       <li v-on:click="goToLabel()">归档</li>
       <li v-on:click=goToAbout()>关于我</li>
-      <li v-on:click="trending">GitHub Trending</li>
+      <li v-on:click="trending">GitHub 热点</li>
       <github-pendant></github-pendant>
     </ul>
     <div class="burger" v-on:click=showIndex()>

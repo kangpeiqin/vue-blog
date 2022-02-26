@@ -5,9 +5,9 @@
     </el-backtop>
     <h1 class="title">{{article.title}}</h1>
     <div class="article-content">
-      <div class="act-image-wrapper">
-        <img :src="article.coverImage" alt=""/>
-      </div>
+<!--      <div class="act-image-wrapper">-->
+<!--        <img :src="article.coverImage" alt=""/>-->
+<!--      </div>-->
       <div class="meta">
         <p class="date-published" style="margin-right: 25px;color: black">
           <i class="far fa-calendar">{{article.createTime}}</i>
@@ -235,14 +235,14 @@ export default {
 
   /* 动态图片容器 */
   .act-image-wrapper {
-    height: 250px;
+    height: 20px;
     overflow: hidden;
     margin: -24px -24px 0;
   }
 
   /* 动态图片 */
   .act-image-wrapper img {
-    min-height: 200px;
+    min-height: 20px;
     object-fit: cover;
   }
 
@@ -282,7 +282,7 @@ export default {
     }
     /* 动态元数据 */
     .article-content .meta {
-      margin-top: -20px;
+      margin-top: 2px;
       margin-bottom: 2px;
       color: #c6c6c6;
       /*font-size: 12px;*/
