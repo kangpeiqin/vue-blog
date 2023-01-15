@@ -1,6 +1,6 @@
 <template>
   <nav class="sticky" ref="header">
-    <div class="logo">PEIQIN BLOG</div>
+    <div class="logo" v-on:click=goToIndex()>PEIQIN BLOG</div>
     <ul class="nav-menu">
       <li v-on:click=goToIndex()>首页</li>
       <li v-on:click="goToType()">分类</li>
@@ -154,6 +154,9 @@ export default {
     font-weight: 600;
     cursor: pointer;
     margin-top: 25px;
+  }
+  .logo {
+    cursor: pointer;
   }
   #my-input{
     margin-top: 15px;
