@@ -166,7 +166,7 @@ export default {
     },
     getData () {
       this.loading = true
-      this.getRequest(config.apiBaseUrl + '/api/post/all', {'pageNum': this.pageNum, 'pageSize': this.pageSize, postStatus: '1'}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/post/all', {'pageNum': this.pageNum, 'pageSize': this.pageSize, postStatus: '1'}).then(resp => {
         if (resp) {
           console.log('data:', resp)
           this.post = resp.data.records
@@ -178,7 +178,7 @@ export default {
     },
     getRecommend () {
       this.loading = true
-      this.getRequest(config.apiBaseUrl + '/api/post/recommend').then(resp => {
+      this.getRequest(config.apiBaseUrl + '/post/recommend').then(resp => {
         if (resp) {
           this.recommendList = resp.data
           this.loading = false

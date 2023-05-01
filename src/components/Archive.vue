@@ -62,7 +62,7 @@ export default {
     },
     getData: function () {
       this.loading = true
-      this.getRequest(config.apiBaseUrl + '/api/post/archives', {pageNum: this.pageNum, pageSize: this.pageSize}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/post/archives', {pageNum: this.pageNum, pageSize: this.pageSize}).then(resp => {
         if (resp) {
           console.log('archivies:', resp)
           this.list = resp.data.list

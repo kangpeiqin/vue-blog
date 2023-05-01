@@ -28,7 +28,7 @@ export default {
   methods: {
     getAboutMe () {
       this.loading = true
-      this.getRequest(config.apiBaseUrl + '/api/about').then(resp => {
+      this.getRequest(config.apiBaseUrl + '/about').then(resp => {
         if (resp) {
           this.about = resp.data
           this.loading = false

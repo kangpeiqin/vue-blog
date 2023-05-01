@@ -128,7 +128,7 @@ export default {
       this.submitComment(data)
     },
     getCommentData: function () {
-      this.getRequest(config.apiBaseUrl + '/api/comment/' + sessionStorage.getItem('articleId'), null).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/comment/' + sessionStorage.getItem('articleId'), null).then(resp => {
         if (resp) {
           console.log('comment', resp.data)
           this.comment = resp.data
@@ -136,7 +136,7 @@ export default {
       })
     },
     submitComment: function (data) {
-      this.postRequest(config.apiBaseUrl + '/api/comment/', data).then(resp => {
+      this.postRequest(config.apiBaseUrl + '/comment/', data).then(resp => {
         console.log('commentResp:', resp)
         this.getCommentData()
       })
@@ -155,7 +155,7 @@ export default {
       this.$refs[formName].resetFields()
     },
     getData () {
-      this.getRequest(config.apiBaseUrl + '/api/post/details', {postId: this.articleId}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/post/details', {postId: this.articleId}).then(resp => {
         if (resp) {
           console.log('article:', resp)
           this.article = resp.data

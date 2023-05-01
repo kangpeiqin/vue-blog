@@ -1,13 +1,14 @@
 <template>
   <nav class="sticky" ref="header">
     <div class="logo" v-on:click=goToIndex()>PEIQIN BLOG</div>
+    <!-- <search-input></search-input> -->
     <ul class="nav-menu">
       <li v-on:click=goToIndex()>首页</li>
       <li v-on:click="goToType()">分类</li>
       <li v-on:click="goToLabel()">归档</li>
       <li v-on:click=goToAbout()>关于我</li>
       <li v-on:click="trending">GitHub 热点</li>
-      <github-pendant></github-pendant>
+<!--      <github-pendant></github-pendant>-->
     </ul>
     <div class="burger" v-on:click=showIndex()>
       <div class="top-line"></div>
@@ -19,13 +20,13 @@
 
 <script>
 import SearchInput from './SearchInput'
-import githubPendant from './githubPendant'
+// import githubPendant from './githubPendant'
 import {mapState} from 'vuex'
 
 export default {
   components: {
-    SearchInput,
-    githubPendant
+    SearchInput
+    // githubPendant,
   },
   computed: mapState(['searchShow']),
   data () {
