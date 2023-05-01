@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     getData: function () {
-      this.getRequest(config.apiBaseUrl + '/api/category/' + this.cateId, {pageNum: this.pageNum}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/category/' + this.cateId, {pageNum: this.pageNum}).then(resp => {
         if (resp) {
           console.log('classification:', resp)
           this.postList = resp.data.records

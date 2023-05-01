@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     getAboutMe () {
-      this.getRequest(config.apiBaseUrl + '/api/about').then(resp => {
+      this.getRequest(config.apiBaseUrl + '/about').then(resp => {
         if (resp) {
           console.log('categories', resp)
           this.about = resp.data

@@ -100,7 +100,7 @@ export default {
       this.dialogFormVisible = true
     },
     getAllTags () {
-      this.getRequest(config.apiBaseUrl + '/api/tag/all').then(resp => {
+      this.getRequest(config.apiBaseUrl + '/tag/all').then(resp => {
         if (resp) {
           console.log('categories', resp)
           this.tableData = resp.data

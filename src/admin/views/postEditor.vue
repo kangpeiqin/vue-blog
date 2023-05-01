@@ -204,13 +204,13 @@ export default {
     }
   },
   created () {
-    this.getRequest(config.apiBaseUrl + '/api/category/all').then(resp => {
+    this.getRequest(config.apiBaseUrl + '/category/all').then(resp => {
       if (resp) {
         console.log('categories', resp)
         this.categories = resp.data
       }
     })
-    this.getRequest(config.apiBaseUrl + '/api/tag/all').then(resp => {
+    this.getRequest(config.apiBaseUrl + '/tag/all').then(resp => {
       if (resp) {
         this.tags = resp.data
       }

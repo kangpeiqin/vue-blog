@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     getAll: function () {
-      this.getRequest(config.apiBaseUrl + '/api/category', {pageNum: this.pageNum}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/category', {pageNum: this.pageNum}).then(resp => {
         if (resp) {
           console.log('classification:', resp)
           this.types = resp.data.records

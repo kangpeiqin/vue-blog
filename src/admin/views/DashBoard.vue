@@ -61,7 +61,7 @@ export default {
     }
   },
   created () {
-    this.getRequest(config.apiBaseUrl + '/api/post/statistics').then(resp => {
+    this.getRequest(config.apiBaseUrl + '/post/statistics').then(resp => {
       if (resp) {
         console.log(resp)
         this.statistics = resp.data

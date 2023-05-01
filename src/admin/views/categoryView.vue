@@ -112,7 +112,7 @@ export default {
       })
     },
     getAll () {
-      this.getRequest(config.apiBaseUrl + '/api/category/all').then(resp => {
+      this.getRequest(config.apiBaseUrl + '/category/all').then(resp => {
         if (resp) {
           console.log('categories', resp)
           this.tableData = resp.data

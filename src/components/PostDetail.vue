@@ -139,7 +139,7 @@ export default {
       this.submitComment(data)
     },
     getCommentData: function () {
-      this.getRequest(config.apiBaseUrl + '/api/comment/' + sessionStorage.getItem('articleId'), null).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/comment/' + sessionStorage.getItem('articleId'), null).then(resp => {
         if (resp) {
           console.log('comment', resp.data)
           this.comment = resp.data

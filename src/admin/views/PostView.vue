@@ -173,7 +173,7 @@ export default {
       })
     },
     getPostList () {
-      this.getRequest(config.apiBaseUrl + '/api/post/all', {pageNum: this.pageNum, pageSize: this.pageSize, keyWord: this.search}).then(resp => {
+      this.getRequest(config.apiBaseUrl + '/post/all', {pageNum: this.pageNum, pageSize: this.pageSize, keyWord: this.search}).then(resp => {
         if (resp) {
           console.log(resp)
           this.tableData = resp.data.records

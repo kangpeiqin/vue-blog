@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     handle: function (draftOnly = false) {
-      this.putRequest(config.apiBaseUrl + '/api/about', this.about, this.headers).then(resp => {
+      this.putRequest(config.apiBaseUrl + '/about', this.about, this.headers).then(resp => {
         if (resp.code === 200) {
           Message.success({message: resp.msg})
           this.$router.push('/previewAbout')
@@ -56,7 +56,7 @@ export default {
       })
     },
     getAboutMe () {
-      this.getRequest(config.apiBaseUrl + '/api/about').then(resp => {
+      this.getRequest(config.apiBaseUrl + '/about').then(resp => {
         if (resp) {
           console.log('categories', resp)
           this.about = resp.data
